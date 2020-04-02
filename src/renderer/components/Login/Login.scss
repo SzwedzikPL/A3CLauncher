@@ -1,0 +1,102 @@
+.login-window {
+  position: absolute;
+  width: calc(100% - 1px);
+  height: calc(100% - 1px);
+  overflow: hidden;
+  background: #000 url('~@/assets/bg-texture.png') repeat;
+  border-radius: 5px;
+  border: 1px solid #3a3a3a;
+}
+
+.window-handler {
+  text-align: right;
+  box-shadow: #FFF 0px 0px 136px -1px;
+  border-bottom: 1px solid #444444;
+  padding: 0 10px;
+
+  button {
+    background: transparent;
+    border: 0;
+    color: #000000;
+    text-shadow: #b3b3b3 0px 0px 1px;
+    opacity: 0.5;
+  }
+}
+
+.window-content {
+  padding: 10px;
+}
+
+.logo {
+  width: 180px;
+  height: 166px;
+  margin: 15px auto 0 auto;
+  background: url('~@/assets/logo.png') no-repeat;
+  background-size: contain;
+}
+
+.title {
+  color: #535353;
+  text-shadow: #000000 0px 0px 2px;
+  display: block;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 400;
+  opacity: 0.7;
+  text-transform: uppercase;
+  margin: -4px 0 18px -2px;
+}
+
+form {
+  padding: 0 25px;
+}
+
+.form-group::before {
+  content: ' ';
+  display: block;
+  width: 100%;
+}
+
+input, input:focus {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  box-shadow: inset rgba(255, 255, 255, 0.28) 0px 0px 6px -2px;
+  font-weight: 200;
+  color: #d0d0d0;
+}
+
+input:focus {
+  box-shadow: inset rgba(255, 255, 255, 0.68) 0px 0px 6px -2px;
+}
+
+.btn-submit {
+  background: rgba(16, 40, 9, 0.6);
+  border: 0px solid rgba(14, 37, 7, 0.93);
+  color: #bbbbbb;
+  font-size: 18px;
+  font-weight: 300;
+  display: block;
+  margin: 0 auto;
+  padding: 6px 65px;
+  box-shadow: inset rgba(34, 117, 19, 0.28) 0px 0px 6px -2px;
+}
+
+.btn-recovery {
+  display: block;
+  color: #595959;
+  margin: 0 auto;
+  font-weight: 300;
+  font-size: 13px;
+  background: #000;
+}
+
+hr {
+  margin: 9px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+label {
+  color: #fff;
+}

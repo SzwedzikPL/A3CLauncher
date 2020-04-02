@@ -1,5 +1,6 @@
 import {app, BrowserWindow} from 'electron';
 
+let mainWindow;
 const isDev = process.env.NODE_ENV === 'development';
 
 if (isDev) {
@@ -13,18 +14,19 @@ if (isDev) {
   });
 }
 
-let mainWindow;
-
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 600,
+    width: 400,
+    height: 450,
+    frame: false,
+    transparent: true,
     webPreferences: {
       nodeIntegration: true
     }
   });
 
-  if (isDev) mainWindow.webContents.openDevTools();
+
+  if (isDev) mainWindow.webContents.openDevTools({mode: 'detach'});
 
   mainWindow.loadURL(isDev ? 'http://localhost:9080' : `file://${__dirname}/index.html`);
 

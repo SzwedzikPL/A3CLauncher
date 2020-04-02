@@ -18,13 +18,21 @@ const rendererConfig = {
         use: {
           loader: 'vue-loader',
           options: {
-            extractCSS: true
+            extractCSS: process.env.NODE_ENV === 'production',
+            loaders: {
+              sass: 'vue-style-loader!css-loader!sass-loader',
+              scss: 'vue-style-loader!css-loader!sass-loader'
+            }
           }
         }
       },
       {
         test: /\.css$/i,
         use: ['vue-style-loader', 'css-loader'],
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.node$/,

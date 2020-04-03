@@ -24,7 +24,7 @@ app.on('ready', () => {
     },
     // login form only
     width: 320,
-    height: 454,
+    height: 464,
     resizable: false,
   });
 

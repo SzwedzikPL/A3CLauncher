@@ -20,7 +20,7 @@ new Vue({
   methods: {
     initLauncherWindow() {
       const currentWindow = remote.getCurrentWindow();
-      currentWindow.setSize(900, 760);
+      currentWindow.setSize(1040, 620);
       currentWindow.center();
       currentWindow.show();
 

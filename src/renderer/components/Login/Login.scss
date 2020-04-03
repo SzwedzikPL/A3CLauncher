@@ -12,23 +12,25 @@
   margin: 0 auto;
   background: url('~@/assets/logo.png') no-repeat;
   background-size: contain;
+  opacity: 0.85;
+  filter: contrast(112%);
 }
 
 .title {
-  color: #535353;
-  text-shadow: #000000 0px 0px 2px;
+  color: #4d4d4d;
+  text-shadow: #000000 1px 1px 0px;
   display: block;
   text-align: center;
-  font-size: 17px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 300;
   opacity: 0.7;
   text-transform: uppercase;
-  margin: -4px 0 18px -2px;
+  margin: -4px 0 18px -4px;
 }
 
 .form {
   position: relative;
-  padding: 0 25px 10px 25px;
+  padding: 0 5px 10px 5px;
 
   .form-spinner {
     display: none;

@@ -1,7 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css';
-
-import '@/styles/fonts.css';
+import '@/styles/bootstrap.scss';
+import '@/styles/font-awesome.scss';
+import '@/styles/fonts.scss';
 import '@/styles/common.scss';
 
 import Vue from 'vue';

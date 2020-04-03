@@ -1,0 +1,35 @@
+$kanitStyles: italic, normal;
+$kanitWeights: (
+  100: Thin,
+  200: ExtraLight,
+  300: Light,
+  400: Regular,
+  500: Medium,
+  600: SemiBold,
+  700: Bold,
+  800: ExtraBold,
+  900: Black
+);
+
+@mixin font-kanit($name, $style, $weight) {
+  @font-face {
+    font-family: 'Kanit';
+    font-style: $style;
+    font-weight: $weight;
+    src: local('Kanit-#{$name}'), url('~@/assets/kanit/Kanit-#{$name}.woff2') format('woff2');
+  }
+}
+
+@each $style in $kanitStyles {
+  @each $weight, $name in $kanitWeights {
+    @if $style == 'italic' {
+      @if $name == 'Regular' {
+        $name: '';
+      }
+
+      $name: $name + 'Italic';
+    }
+
+    @include font-kanit($name, $style, $weight);
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <div class="login-window">
+  <div class="window login-window">
     <div class="window-handler">
       <button type="button" @click="$root.minimizeWindow">
         <i class="fa fa-minus"></i>
@@ -62,13 +62,15 @@ export default {
     },
     loginUser() {
       this.waiting = true;
-      this.$store.dispatch('session/login', {username: this.username, password: this.password}).then(result => {
-        this.error = null;
+      this.$store.dispatch('session/login', {
+        username: this.username,
+        password: this.password
+      }).then(result => {
+
       }).catch(error => {
-        this.error = error.message;
-      }).finally(() => {
-        this.updateWindowSize();
         this.waiting = false;
+        this.error = error.message;
+        this.$nextTick(this.updateWindowSize());
       });
     }
   }

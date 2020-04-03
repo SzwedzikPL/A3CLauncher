@@ -9,3 +9,38 @@ html, body {
 * {
   font-family: 'Kanit', sans-serif;
 }
+
+#app > .window {
+  border-radius: 5px;
+  border: 1px solid #3a3a3a;
+}
+
+.window-handler {
+  text-align: right;
+  box-shadow: #FFF 0px 0px 136px -1px, inset rgba(255, 255, 255, 0.28) 0px -11px 18px -15px;
+  border-bottom: 1px solid #444444;
+  padding: 0 10px;
+  -webkit-app-region: drag;
+
+  button {
+    background: transparent;
+    border: 0;
+    color: #3c3c3c;
+    text-shadow: #000000 1px 1px 0px;
+    outline: none;
+    -webkit-app-region: no-drag;
+
+    &:hover {
+      color: #8a8a8a;
+    }
+
+    .fa-minus {
+      vertical-align: -2px;
+    }
+
+    .fa-window-maximize, .fa-window-restore {
+      font-size: 0.8rem;
+      vertical-align: 0.05rem;
+    }
+  }
+}

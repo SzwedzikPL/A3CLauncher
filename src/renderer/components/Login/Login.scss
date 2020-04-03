@@ -1,31 +1,8 @@
 .login-window {
   background: #000 url('~@/assets/bg-texture.png') repeat;
-  border-radius: 5px;
-  border: 1px solid #3a3a3a;
-  width: 320px;
 }
 
-.window-handler {
-  text-align: right;
-  box-shadow: #FFF 0px 0px 136px -1px;
-  border-bottom: 1px solid #444444;
-  padding: 0 10px;
-  -webkit-app-region: drag;
-
-  button {
-    background: transparent;
-    border: 0;
-    color: #3c3c3c;
-    text-shadow: #000000 1px 1px 0px;
-    -webkit-app-region: no-drag;
-  }
-
-  .fa-minus {
-    vertical-align: -2px;
-  }
-}
-
-.window-content {
+.login-window .window-content {
   padding: 10px;
 }
 

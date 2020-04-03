@@ -8,18 +8,25 @@ const actions = {
   login({commit}, form) {
     return new Promise((resolve, reject) => {
 
+      // Test
       setTimeout(() => {
-        reject({
-          message: 'Błąd połączenia API'
+        commit('setUser', {
+          username: 'Gracz1'
         });
-      }, 5000);
+        resolve();
+      }, 3000);
+
+      // reject({
+      //   message: 'Błąd połączenia API'
+      // });
 
     });
   }
 };
 const mutations = {
-  setUser() {
-
+  setUser(state, user) {
+    state.loggedIn = true;
+    state.user = user;
   }
 };
 

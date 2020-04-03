@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Login v-if="!$store.state.session.logged" />
-    <Launcher v-else />
+    <Login v-if="!loggedIn" />
+    <Launcher v-else v-show="launcherReady" @ready="onLauncherReady" />
   </div>
 </template>
 
@@ -11,6 +11,19 @@ import Launcher from '@/components/Launcher';
 
 export default {
   name: 'App',
+  data: () => ({
+    launcherReady: false
+  }),
+  computed: {
+    loggedIn() {
+      return this.$store.state.session.loggedIn;
+    }
+  },
+  methods: {
+    onLauncherReady() {
+      this.launcherReady = true;
+    }
+  },
   components: {Login, Launcher}
 }
 </script>

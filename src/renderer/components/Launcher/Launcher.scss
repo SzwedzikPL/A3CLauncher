@@ -1,0 +1,29 @@
+.launcher-window {
+  background: #000 url('~@/assets/bg-texture.png') repeat;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.launcher-background {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: url('~@/assets/default-launcher-background.jpg');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  opacity: 0.125;
+  z-index: 0;
+}
+
+.window-content {
+  position: relative;
+}
+
+.fa-window-maximize, .fa-window-restore {
+  font-size: 0.8rem;
+  vertical-align: 0.05rem;
+}

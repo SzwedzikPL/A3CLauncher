@@ -1,20 +1,25 @@
 
 const state = {
-  logged: false,
+  loggedIn: false,
   user: null,
-
 };
 const getters = {};
 const actions = {
-  login() {
+  login({commit}, form) {
     return new Promise((resolve, reject) => {
-      resolve();
+
+      setTimeout(() => {
+        reject({
+          message: 'Błąd połączenia API'
+        });
+      }, 5000);
+
     });
   }
 };
 const mutations = {
   setUser() {
-    
+
   }
 };
 

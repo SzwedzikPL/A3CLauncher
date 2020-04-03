@@ -1,11 +1,8 @@
 .login-window {
-  position: absolute;
-  width: calc(100% - 1px);
-  height: calc(100% - 1px);
-  overflow: hidden;
   background: #000 url('~@/assets/bg-texture.png') repeat;
   border-radius: 5px;
   border: 1px solid #3a3a3a;
+  width: 320px;
 }
 
 .window-handler {
@@ -13,13 +10,18 @@
   box-shadow: #FFF 0px 0px 136px -1px;
   border-bottom: 1px solid #444444;
   padding: 0 10px;
+  -webkit-app-region: drag;
 
   button {
     background: transparent;
     border: 0;
-    color: #000000;
-    text-shadow: #b3b3b3 0px 0px 1px;
-    opacity: 0.5;
+    color: #3c3c3c;
+    text-shadow: #000000 1px 1px 0px;
+    -webkit-app-region: no-drag;
+  }
+
+  .fa-minus {
+    vertical-align: -2px;
   }
 }
 
@@ -30,7 +32,7 @@
 .logo {
   width: 180px;
   height: 166px;
-  margin: 15px auto 0 auto;
+  margin: 0 auto;
   background: url('~@/assets/logo.png') no-repeat;
   background-size: contain;
 }
@@ -47,8 +49,42 @@
   margin: -4px 0 18px -2px;
 }
 
-form {
-  padding: 0 25px;
+.form {
+  position: relative;
+  padding: 0 25px 10px 25px;
+
+  .form-spinner {
+    display: none;
+  }
+
+  &.waiting {
+    &::before {
+      content: ' ';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      background: transparent;
+      z-index: 8;
+    }
+
+    .form-spinner {
+      display: block;
+      position: absolute;
+      color: #638c14;
+      top: 40px;
+      width: 2.5rem;
+      height: 2.5rem;
+      left: -1.25rem;
+      z-index: 9;
+      margin-left: 50%;
+    }
+
+    & > .form-content {
+      opacity: 0.3;
+    }
+  }
 }
 
 .form-group::before {
@@ -70,15 +106,11 @@ input:focus {
 }
 
 .btn-submit {
-  background: rgba(16, 40, 9, 0.6);
-  border: 0px solid rgba(14, 37, 7, 0.93);
-  color: #bbbbbb;
   font-size: 18px;
   font-weight: 300;
   display: block;
   margin: 0 auto;
   padding: 6px 65px;
-  box-shadow: inset rgba(34, 117, 19, 0.28) 0px 0px 6px -2px;
 }
 
 .btn-recovery {
@@ -88,6 +120,15 @@ input:focus {
   font-weight: 300;
   font-size: 13px;
   background: #000;
+}
+
+.btn-show-password {
+  position: absolute;
+  top: 0;
+  right: 0;
+  outline: 0 !important;
+  color: #525252;
+  box-shadow: none !important;
 }
 
 hr {

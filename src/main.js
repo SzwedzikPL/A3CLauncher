@@ -16,15 +16,17 @@ if (isDev) {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    width: 400,
-    height: 450,
+    // always
     frame: false,
     transparent: true,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    // login form only
+    width: 320,
+    height: 454,
+    resizable: false,
   });
-
 
   if (isDev) mainWindow.webContents.openDevTools({mode: 'detach'});
 

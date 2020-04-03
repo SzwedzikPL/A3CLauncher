@@ -12,5 +12,34 @@
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/alert";
 
 // Modifications
+.form-group {
+  position: relative;
+}
+
+.btn {
+  box-shadow: #000 1px 1px 0px 0px !important;
+}
+
+.btn-success {
+  border: 0;
+  color: #deffcc;
+  background: #143a00 url('~@/assets/button-texture.png');
+
+  &:hover, &:focus, &:active {
+    border: 0;
+    background: #143a00 url('~@/assets/button-texture.png') !important;
+    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px !important;
+  }
+  &:active {
+    box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px !important;
+  }
+}
+
+.alert-danger {
+  background: #450000 url('~@/assets/button-texture.png');
+  color: #ffb0b0;
+  border: 0;
+}

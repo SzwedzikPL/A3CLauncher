@@ -1,16 +1,16 @@
 <template>
   <div>
-    Zakładka graj
+    Zakładka Twórz misje
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Play',
+  name: 'Missions',
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
-
+  @import '~./Missions.scss';
 </style>

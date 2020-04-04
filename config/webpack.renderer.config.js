@@ -9,7 +9,13 @@ const {dependencies} = require('../package.json');
 const rendererConfig = {
   devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : false,
   entry: {
-    renderer: path.join(__dirname, '../src/renderer/index.js')
+    index: path.join(__dirname, '../src/renderer/index/index.js'),
+    console: path.join(__dirname, '../src/renderer/console/index.js')
+  },
+  output: {
+    filename: '[name].js',
+    libraryTarget: 'commonjs2',
+    path: path.join(__dirname, '../dist')
   },
   module: {
     rules: [
@@ -76,20 +82,22 @@ const rendererConfig = {
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: path.resolve(__dirname, '../src/index.ejs'),
-      minify: {
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        removeComments: true
-      },
+      chunks: ['index'],
+      template: path.resolve(__dirname, '../src/renderer/index/index.ejs'),
       nodeModules: process.env.NODE_ENV !== 'production'
         ? path.resolve(__dirname, '../node_modules')
         : false
     }),
-    // Use preload for quicker init of assets (mainly fonts) in index
+    new HtmlWebpackPlugin({
+      filename: 'console.html',
+      chunks: ['console'],
+      template: path.resolve(__dirname, '../src/renderer/console/index.ejs'),
+    }),
+    // Use preload for quicker init of assets (mainly fonts) in index.html
     new PreloadWebpackPlugin({
       rel: 'preload',
       include: 'allAssets',
+      excludeHtmlNames: ['console.html'],
       as(entry) {
         if (/\.css$/.test(entry)) return 'style';
         if (/\.(woff2?|eot|ttf|otf)$/.test(entry)) return 'font';
@@ -100,14 +108,10 @@ const rendererConfig = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin()
   ],
-  output: {
-    filename: '[name].js',
-    libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist')
-  },
   resolve: {
     alias: {
-      '@': path.join(__dirname, '../src/renderer'),
+      '@': path.join(__dirname, '../src/renderer/index'),
+      '@console': path.join(__dirname, '../src/renderer/console'),
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node']

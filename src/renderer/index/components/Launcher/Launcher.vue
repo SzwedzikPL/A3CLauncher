@@ -22,13 +22,13 @@
           <div class="logo-placeholder"></div>
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" :class="{active: currentTabComponent == 'Play'}" @click="switchTab('Play')">Graj</a>
+              <a class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')">Graj</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="{active: currentTabComponent == 'Missions'}" @click="switchTab('Missions')">Twórz misje</a>
+              <a class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')">Twórz misje</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="{active: currentTabComponent == 'Settings'}" @click="switchTab('Settings')">Ustawienia</a>
+              <a class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')">Ustawienia</a>
             </li>
           </ul>
         </div>
@@ -73,6 +73,9 @@ export default {
     }, 800);
   },
   methods: {
+    tabActive(tab) {
+      return this.currentTabComponent === tab;
+    },
     switchTab(tab) {
       this.currentTabComponent = tab;
     }
@@ -82,5 +85,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@/components/Launcher/Launcher.scss';
+  @import '~./Launcher.scss';
 </style>

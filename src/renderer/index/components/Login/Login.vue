@@ -78,5 +78,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@/components/Login/Login.scss';
+  @import '~./Login.scss';
 </style>

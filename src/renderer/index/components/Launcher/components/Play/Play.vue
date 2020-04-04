@@ -1,16 +1,16 @@
 <template>
   <div>
-    Zakładka ustawienia
+    Zakładka graj
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Settings',
+  name: 'Play',
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
-
+  @import '~./Play.scss';
 </style>

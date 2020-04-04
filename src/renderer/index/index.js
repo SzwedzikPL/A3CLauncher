@@ -11,6 +11,18 @@ const {shell, remote} = require('electron');
 
 Vue.config.productionTip = false;
 
+// Logger for Arma 3 rpt
+// const isDev = process.env.NODE_ENV === 'development';
+// const BrowserWindow = remote.BrowserWindow;
+// let win = new BrowserWindow({
+//   width: 800,
+//   height: 600,
+//   webPreferences: {
+//     nodeIntegration: true
+//   },
+// });
+// win.loadURL(isDev ? 'http://localhost:9080/console.html' : `file://${__dirname}/console.html`);
+
 new Vue({
   el: '#app',
   store,

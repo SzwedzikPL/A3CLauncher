@@ -1,16 +1,16 @@
 <template>
   <div>
-    Zakładka Twórz misje
+    Zakładka ustawienia
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Missions',
+  name: 'Settings',
   components: {}
 }
 </script>
 
 <style lang="scss" scoped>
-
+  @import '~./Settings.scss';
 </style>

@@ -25,15 +25,15 @@ new Vue({
       currentWindow.show();
 
       // Workaround for https://github.com/electron/electron/issues/19934
-      currentWindow.on('resize', () => {
-        const bounds = currentWindow.getBounds();
-        const size = currentWindow.getSize();
-        const workArea = remote.screen.getDisplayMatching(bounds).workArea;
-        this.isWindowMaximized = (
-          size[0] == workArea.width &&
-          size[1] == workArea.height
-        );
-      });
+      // currentWindow.on('resize', () => {
+      //   const bounds = currentWindow.getBounds();
+      //   const size = currentWindow.getSize();
+      //   const workArea = remote.screen.getDisplayMatching(bounds).workArea;
+      //   this.isWindowMaximized = (
+      //     size[0] == workArea.width &&
+      //     size[1] == workArea.height
+      //   );
+      // });
     },
     preInitLauncherWindow(value) {
       const currentWindow = remote.getCurrentWindow();

@@ -16,6 +16,8 @@ html, body {
 }
 
 .window-handler {
+  position: relative;
+  z-index: 2;
   text-align: right;
   box-shadow: #FFF 0px 0px 136px -1px, inset rgba(255, 255, 255, 0.28) 0px -11px 18px -15px;
   border-bottom: 1px solid #444444;

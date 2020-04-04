@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "arch": "2.1.1",
+    "axios": "0.19.2",
     "bootstrap": "4.4.1",
     "electron-log": "4.1.1",
     "electron-store": "5.1.1",

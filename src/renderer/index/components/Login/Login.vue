@@ -13,22 +13,22 @@
       <div class="title">Community Launcher</div>
       <div class="form" :class="{waiting: waiting}">
         <div class="form-spinner spinner-border"></div>
-        <div class="form-content">
+        <form class="form-content" @submit.prevent="loginUser">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Nazwa użytkownika" tabindex="0" v-model="username">
+            <input type="text" class="form-control" placeholder="Nazwa użytkownika" tabindex="1" v-model="username" ref="inputUsername">
           </div>
           <div class="form-group">
-            <input :type="showPassword ? 'text' : 'password'" class="form-control" placeholder="Hasło" tabindex="1" v-model="password">
+            <input :type="showPassword ? 'text' : 'password'" class="form-control" placeholder="Hasło" tabindex="2" v-model="password">
             <button class="btn btn-show-password" @click="toggleShowPassword">
               <i class="fa fa-eye" v-if="!showPassword"></i>
               <i class="fa fa-eye-slash" v-else></i>
             </button>
           </div>
           <div class="alert alert-danger" v-if="error" v-text="error"></div>
-          <button class="btn btn-success btn-submit" @click="loginUser" tabindex="2">Zaloguj</button>
+          <button class="btn btn-success btn-submit" @click="loginUser" tabindex="3">Zaloguj</button>
           <hr />
-          <button class="btn btn-recovery" @click="openWebRecovery" tabindex="3">Przypomnij hasło <i class="fa fa-external-link"></i></button>
-        </div>
+          <button class="btn btn-recovery" @click="openWebRecovery" tabindex="4">Przypomnij hasło <i class="fa fa-external-link"></i></button>
+        </form>
       </div>
     </div>
   </div>
@@ -46,13 +46,16 @@ export default {
   }),
   mounted() {
     this.$nextTick(() => this.updateWindowSize());
+    this.$refs.inputUsername.focus();
   },
   methods: {
     updateWindowSize() {
-      this.$root.setWindowSize(
-        document.documentElement.scrollWidth,
-        document.documentElement.scrollHeight
-      )
+      [0, 10].forEach(delay => setTimeout(() => {
+        this.$root.setWindowSize(
+          document.documentElement.scrollWidth,
+          document.documentElement.scrollHeight
+        )
+      }, delay));
     },
     openWebRecovery() {
       this.$root.openExternal('https://arma3coop.pl/ucp.php?mode=sendpassword');

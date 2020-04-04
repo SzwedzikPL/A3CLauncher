@@ -1,25 +1,38 @@
+import axios from 'axios';
 
+
+const defaultAvatar = require('@/assets/default-avatar.png').default;
 const state = {
   loggedIn: false,
   user: null,
 };
+
 const getters = {};
 const actions = {
   login({commit}, form) {
     return new Promise((resolve, reject) => {
+      const formData = new FormData();
+      formData.append('username', form.username);
+      formData.append('password', form.password);
 
-      // Test
-      setTimeout(() => {
-        commit('setUser', {
-          username: 'Gracz1'
-        });
+      axios.post('https://arma3coop.pl/api/login/', formData)
+      .then(result => {
+        const data = result.data;
+
+        if (data.error) return reject(data);
+
+        commit('setUser', data.user);
         resolve();
-      }, 3000);
+      })
+      .catch(error => {
+        let message = error.message;
 
-      // reject({
-      //   message: 'Błąd połączenia API'
-      // });
+        if (error.response) {
+          message = error.response.statusText;
+        }
 
+        reject({message});
+      });
     });
   }
 };

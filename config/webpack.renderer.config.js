@@ -49,8 +49,8 @@ const rendererConfig = {
         use: {
           loader: 'url-loader',
           query: {
-            limit: 10000,
-            name: 'images/[name]--[folder].[ext]'
+            limit: false,
+            name: 'images/[name].[contenthash].[ext]'
           }
         }
       },
@@ -58,8 +58,8 @@ const rendererConfig = {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
-          name: 'media/[name]--[folder].[ext]'
+          limit: false,
+          name: 'media/[name].[contenthash].[ext]'
         }
       },
       {
@@ -67,8 +67,8 @@ const rendererConfig = {
         use: {
           loader: 'url-loader',
           query: {
-            limit: 10000,
-            name: 'fonts/[name]--[folder].[ext]'
+            limit: false,
+            name: 'fonts/[name].[contenthash].[ext]'
           }
         }
       }

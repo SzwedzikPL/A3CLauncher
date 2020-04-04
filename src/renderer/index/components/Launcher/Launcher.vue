@@ -32,8 +32,12 @@
             </li>
           </ul>
         </div>
-        <div class="userbox">
-          {{ user.username }}
+        <div class="user-wrapper">
+          <img :src="user.avatar" class="user-avatar" />
+          <div class="user-data">
+            <span class="user-name" v-text="user.name" :style="user.color ? {color: user.color} : null"></span>
+            <span class="user-rank" v-text="user.rank"></span>
+          </div>
         </div>
       </div>
       <div class="launcher-content">

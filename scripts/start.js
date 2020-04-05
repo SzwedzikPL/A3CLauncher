@@ -9,6 +9,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const packageConfig = require('../package.json');
 const mainConfig = require('../config/webpack.main.config');
 const rendererConfig = require('../config/webpack.renderer.config');
+const initTestApi = require('./test.api');
 
 let electronProcess = null;
 let electronProcessRestart = false;
@@ -56,10 +57,7 @@ function startRenderer () {
           app.use(hotMiddleware);
           ctx.middleware.waitUntilValid(() => resolve());
 
-          // TODO: setup test API here
-          // app.get('/api/login', (req, res) => {
-          //   res.json({login: 'response'});
-          // });
+          initTestApi(app);
         }
       }
     );

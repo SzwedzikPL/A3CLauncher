@@ -1,18 +1,23 @@
 import electronStore from '../electron';
-
-const state = electronStore.store;
-const getters = {};
-const actions = {};
-const mutations = {
-  setTest (state, payload) {
-    state.test = payload;
-  }
-};
+import credentials from '@/credentials.js';
 
 export default {
   namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations
+  state: electronStore.store,
+  getters: {},
+  actions: {},
+  mutations: {
+    onLogout(state) {
+      state.autoLogin = false;
+
+      if (state.lastUsername)
+        credentials.delete(state.lastUsername);
+    },
+    onLogin(state, form) {
+      state.lastUsername = form.username;
+
+      if (state.autoLogin = form.remember)
+        credentials.save(form.username, form.password);
+    }
+  }
 }

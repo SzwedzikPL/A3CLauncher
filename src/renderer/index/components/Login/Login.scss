@@ -67,10 +67,48 @@
   }
 }
 
-.form-group::before {
-  content: ' ';
-  display: block;
-  width: 100%;
+.form-checkbox {
+  margin-left: 4px;
+  line-height: 18px;
+
+  .checkbox {
+    width: 19px;
+    height: 19px;
+    display: inline-block;
+    padding: 1px 0 0 1px;
+    background: #000;
+    float: left;
+    margin-right: 3px;
+    border-radius: 5px;
+    box-shadow: inset #252525 -1px -1px 0px 0px;
+    cursor: pointer;
+
+    i {
+      font-size: 16px;
+      display: block;
+      color: #0f400a;
+    }
+  }
+
+  label {
+    cursor: pointer;
+    color: #454545;
+    font-size: 14px;
+    vertical-align: middle;
+    margin: 0;
+  }
+
+  input {
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+
+    &:focus + .checkbox {
+      box-shadow: inset #252424 -1px -1px 0px 0px, #888 0px 0px 2px 0px;
+    }
+  }
 }
 
 input, input:focus {
@@ -91,24 +129,69 @@ input:focus {
   display: block;
   margin: 0 auto;
   padding: 6px 65px;
+  color: #d6d6d6;
+
+  &:hover, &:focus, &:active {
+    color: #fff;
+  }
 }
 
-.btn-recovery {
-  display: block;
+.link-buttons {
+  text-align: center;
+}
+
+.btn-link {
+  position: relative;
   color: #595959;
-  margin: 0 auto;
   font-weight: 300;
   font-size: 13px;
   background: #000;
+
+  &:hover, &:focus, &:active {
+    color: #969696;
+  }
+
+  &.btn-link-forum {
+    width: 122px;
+    height: 33px;
+  }
+
+  &.btn-link-recovery {
+    width: 160px;
+    height: 33px;
+  }
+
+  & > .btn-spinner {
+    display: none;
+  }
+
+  &:disabled {
+    & > .btn-content {
+      display: none;
+    }
+
+    & > .btn-spinner {
+      display: block;
+      position: absolute;
+      width: 1.4rem;
+      height: 1.4rem;
+      top: calc(50% - 0.7rem);
+      left: calc(50% - 0.7rem);
+    }
+  }
 }
 
 .btn-show-password {
   position: absolute;
   top: 0;
   right: 0;
-  outline: 0 !important;
-  color: #525252;
-  box-shadow: none !important;
+  outline: 0;
+  color: #444343;
+  box-shadow: none;
+
+  &:hover, &:focus, &:active {
+    color: #808080;
+  }
 }
 
 hr {

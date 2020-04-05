@@ -38,6 +38,14 @@
             <span class="user-name" v-text="user.name" :style="user.color ? {color: user.color} : null"></span>
             <span class="user-rank" v-text="user.rank"></span>
           </div>
+          <!-- TODO: Add drop controls -->
+          <div class="drop">
+            <div class="list-group">
+              <a href="#" class="list-group-item list-group-item-action" @click="logout">
+                Wyloguj <i class="fa fa-sign-out"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="launcher-content">
@@ -50,12 +58,14 @@
 </template>
 
 <script>
+import Page from '@/components/Page.vue';
 import Play from './components/Play';
 import Missions from './components/Missions';
 import Settings from './components/Settings';
 
 export default {
   name: 'Launcher',
+  extends: Page,
   data: () => ({
     currentTabComponent: 'Play'
   }),
@@ -64,19 +74,17 @@ export default {
       return this.$store.state.session.user;
     }
   },
-  mounted() {
-    // Give chrome time to update screen
-    // This fixes blink of login-window on launcher-window showing up
-    // TODO: find better way...
-    setTimeout(() => {
-      this.$root.preInitLauncherWindow();
-      this.$emit('ready');
-    }, 200);
-    setTimeout(() => {
-      this.$root.initLauncherWindow();
-    }, 800);
-  },
   methods: {
+    initWindow() {
+      const currentWindow = this.$root.getCurrentWindow();
+      currentWindow.setSize(1040, 620);
+      currentWindow.center();
+      currentWindow.show();
+      this.$emit('ready');
+    },
+    logout() {
+      this.$store.dispatch('session/logout');
+    },
     tabActive(tab) {
       return this.currentTabComponent === tab;
     },

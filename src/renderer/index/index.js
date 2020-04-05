@@ -6,6 +6,7 @@ import '@/styles/common.scss';
 import Vue from 'vue';
 import App from '@/components/App';
 import store from '@/store';
+import appConfig from '@/config.js';
 
 const {shell, remote} = require('electron');
 
@@ -27,41 +28,30 @@ new Vue({
   el: '#app',
   store,
   data: () => ({
-    isWindowMaximized: false
+    isWindowMaximized: false,
   }),
   methods: {
-    initLauncherWindow() {
-      const currentWindow = remote.getCurrentWindow();
-      currentWindow.setSize(1040, 620);
-      currentWindow.center();
-      currentWindow.show();
-
-      // Workaround for https://github.com/electron/electron/issues/19934
-      // currentWindow.on('resize', () => {
-      //   const bounds = currentWindow.getBounds();
-      //   const size = currentWindow.getSize();
-      //   const workArea = remote.screen.getDisplayMatching(bounds).workArea;
-      //   this.isWindowMaximized = (
-      //     size[0] == workArea.width &&
-      //     size[1] == workArea.height
-      //   );
-      // });
-    },
-    preInitLauncherWindow(value) {
-      const currentWindow = remote.getCurrentWindow();
-      currentWindow.hide();
-      currentWindow.resizable = true;
+    getCurrentWindow() {
+      return remote.getCurrentWindow();
     },
     getWindowSize() {
       return remote.getCurrentWindow().getSize();
     },
     setWindowSize(x, y, center = false) {
       const currentWindow = remote.getCurrentWindow();
+      const resizable = currentWindow.resizable;
+      currentWindow.resizable = true;
       currentWindow.setSize(x, y);
       if (center) currentWindow.center();
+      currentWindow.resizable = resizable;
     },
-    openExternal(path) {
-      shell.openExternal(path);
+    openLink(linkName) {
+      return new Promise((resolve, reject) => {
+        const link = appConfig.links[linkName];
+        if (!link) return reject('Unknown link: ' + linkName);
+
+        shell.openExternal(link).then(resolve).catch(reject);
+      });
     },
     maximizeWindow() {
       remote.getCurrentWindow().maximize();

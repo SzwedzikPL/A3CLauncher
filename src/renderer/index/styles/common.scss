@@ -32,7 +32,7 @@ html, body {
     outline: none;
     -webkit-app-region: no-drag;
 
-    &:hover {
+    &:hover, &:focus {
       color: #8a8a8a;
     }
 

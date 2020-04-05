@@ -80,6 +80,7 @@
   }
 
   .user-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -92,9 +93,11 @@
       max-width: 40px;
       max-height: 40px;
       margin-right: 8px;
+      z-index: 2;
     }
 
     .user-data {
+      z-index: 2;
       line-height: 15px;
 
       .user-name {
@@ -109,6 +112,25 @@
         color: #727272;
         font-size: 13px;
         font-weight: 300;
+      }
+    }
+
+    .drop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+      z-index: 1;
+      background: #000000;
+      border-radius: 5px;
+
+      .list-group {
+        margin-top: 50px;
+
+        .list-group-item {
+          border-radius: 0;
+        }
       }
     }
   }

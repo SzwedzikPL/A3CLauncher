@@ -4,7 +4,9 @@ const {VueLoaderPlugin} = require('vue-loader');
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const {dependencies} = require('../package.json');
+const packageConfig = require('../package.json');
+
+process.env.PRODUCT_NAME = packageConfig.build.productName;
 
 const rendererConfig = {
   devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : false,

@@ -1,52 +1,55 @@
-import axios from 'axios';
+import api from '@/api';
 
-
-const defaultAvatar = require('@/assets/default-avatar.png').default;
-const state = {
-  loggedIn: false,
-  user: null,
-};
-
-const getters = {};
-const actions = {
-  login({commit}, form) {
-    return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      formData.append('username', form.username);
-      formData.append('password', form.password);
-
-      axios.post('https://arma3coop.pl/api/login/', formData)
-      .then(result => {
-        const data = result.data;
-
-        if (data.error) return reject(data);
-
-        commit('setUser', data.user);
-        resolve();
-      })
-      .catch(error => {
-        let message = error.message;
-
-        if (error.response) {
-          message = error.response.statusText;
-        }
-
-        reject({message});
-      });
-    });
-  }
-};
-const mutations = {
-  setUser(state, user) {
-    state.loggedIn = true;
-    state.user = user;
-  }
-};
+import defaultAvatar from '@/assets/default-avatar.png';
 
 export default {
   namespaced: true,
-  state,
-  getters,
-  actions,
-  mutations
+  state: {
+    loggedIn: false,
+    apiToken: null,
+    user: null,
+  },
+  getters: {},
+  actions: {
+    logout({commit}) {
+      commit('setUser', null);
+      commit('app/onLogout', null, {root: true});
+    },
+    login({commit, state}, form) {
+      return new Promise((resolve, reject) => {
+        if (state.loggedIn) return resolve();
+
+        api.login(form.username, form.password)
+        .then(result => {
+          const data = result.data;
+
+          if (data.error) return reject(data);
+
+          commit('setUser', data.user);
+          commit('setToken', data.token);
+          commit('app/onLogin', form, {root: true});
+
+          resolve();
+        })
+        .catch(error => {
+          let message = error.message;
+
+          if (error.response) {
+            message = error.response.statusText;
+          }
+
+          reject({message});
+        });
+      });
+    }
+  },
+  mutations: {
+    setUser(state, user) {
+      state.loggedIn = user !== null;
+      state.user = user;
+    },
+    setToken(state, token) {
+      state.apiToken = token;
+    }
+  }
 }

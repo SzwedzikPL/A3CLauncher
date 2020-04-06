@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const {VueLoaderPlugin} = require('vue-loader');
 const PreloadWebpackPlugin = require('@vue/preload-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 
 const packageConfig = require('../package.json');
 
@@ -111,12 +112,20 @@ const rendererConfig = {
     new webpack.NoEmitOnErrorsPlugin()
   ],
   resolve: {
+    plugins: [
+      new DirectoryNamedWebpackPlugin({
+        honorIndex: true,
+        include: [
+          path.join(__dirname, '../src'),
+        ]
+      })
+    ],
     alias: {
       '@': path.join(__dirname, '../src/renderer/index'),
       '@console': path.join(__dirname, '../src/renderer/console'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node']
+    extensions: ['.js', '.vue', '.json', '.css', '.node', '.vue']
   },
   target: 'electron-renderer'
 }

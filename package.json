@@ -61,6 +61,7 @@
     "chalk": "3.0.0",
     "css-loader": "3.4.2",
     "devtron": "1.4.0",
+    "directory-named-webpack-plugin": "4.0.1",
     "electron": "8.2.0",
     "electron-builder": "22.4.1",
     "electron-devtools-installer": "2.2.4",
@@ -77,6 +78,7 @@
     "vue-template-compiler": "2.6.11",
     "webpack": "4.42.1",
     "webpack-dev-server": "3.10.3",
-    "webpack-hot-middleware": "2.25.0"
+    "webpack-hot-middleware": "2.25.0",
+    "webpack-merge": "4.2.2"
   }
 }

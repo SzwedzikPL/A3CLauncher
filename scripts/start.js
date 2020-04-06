@@ -1,15 +1,16 @@
 const chalk = require('chalk');
+const fs = require('fs');
 const electron = require('electron');
 const path = require('path');
 const {spawn} = require('child_process');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const formidableMiddleware = require('express-formidable');
 
 const packageConfig = require('../package.json');
 const mainConfig = require('../config/webpack.main.config');
 const rendererConfig = require('../config/webpack.renderer.config');
-const initTestApi = require('./test.api');
 
 let electronProcess = null;
 let electronProcessRestart = false;
@@ -43,26 +44,48 @@ function startRenderer () {
       heartbeat: 2500
     });
 
+    let server, serverReloading = false;
+    function initServer() {
+      if (serverReloading) return;
+      serverReloading = true;
+      server = new WebpackDevServer(
+        compiler,
+        {
+          contentBase: path.join(__dirname, '../dist'),
+          quiet: true,
+          clientLogLevel: 'error',
+          before(app, ctx) {
+            serverApp = app;
+            app.use(hotMiddleware);
+            app.use(formidableMiddleware());
+            ctx.middleware.waitUntilValid(() => resolve());
+
+            // Load current api
+            delete require.cache[require.resolve('../api')];
+            require('../api')(app);
+          }
+        }
+      );
+      server.listen(9080, '127.0.0.1', () => {
+        console.log('Server online');
+        serverReloading = false;
+      });
+    }
+
     compiler.hooks.done.tap('done', stats => {
       logStats('Renderer', stats);
     });
 
-    const server = new WebpackDevServer(
-      compiler,
-      {
-        contentBase: path.join(__dirname, '../dist'),
-        quiet: true,
-        clientLogLevel: 'error',
-        before(app, ctx) {
-          app.use(hotMiddleware);
-          ctx.middleware.waitUntilValid(() => resolve());
+    initServer();
 
-          initTestApi(app);
-        }
-      }
-    );
-
-    server.listen(9080);
+    fs.watch('api', (eventType, filename) => {
+      // Api changed, reload server
+      if (!server || !server.close || serverReloading) return;
+      console.log('Restarting server...');
+      server.close(() => {
+        initServer();
+      });
+    });
   });
 }
 

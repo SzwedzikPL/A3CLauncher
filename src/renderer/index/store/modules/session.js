@@ -20,26 +20,25 @@ export default {
         if (state.loggedIn) return resolve();
 
         api.login(form.username, form.password)
-        .then(result => {
-          const data = result.data;
-
-          if (data.error) return reject(data);
-
+        .then(data => {
           commit('setUser', data.user);
           commit('setToken', data.token);
           commit('app/onLogin', form, {root: true});
 
           resolve();
-        })
-        .catch(error => {
-          let message = error.message;
+        }).catch(reject);
+      });
+    },
+    init() {
+      // Check is api enabled
+      return new Promise((resolve, reject) => {
+          api.status().then(data => {
+            if (!data.enabled) return reject({
+              message: data.message
+            });
 
-          if (error.response) {
-            message = error.response.statusText;
-          }
-
-          reject({message});
-        });
+            resolve(data);
+          }).catch(reject);
       });
     }
   },

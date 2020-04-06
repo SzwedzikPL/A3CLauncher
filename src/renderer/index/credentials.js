@@ -1,5 +1,5 @@
 import keytar from 'keytar';
-import appConfig from '@/config.js';
+import appConfig from '@/config';
 
 const service = appConfig.credentialsService;
 

@@ -1,9 +1,8 @@
 import {app, BrowserWindow} from 'electron';
 
 let mainWindow;
-const isDev = process.env.NODE_ENV === 'development';
 
-if (isDev) {
+if (process.env.NODE_ENV === 'development') {
   app.on('ready', () => {
     const installExtension = require('electron-devtools-installer');
     installExtension.default(installExtension.VUEJS_DEVTOOLS)
@@ -24,13 +23,15 @@ app.on('ready', () => {
     },
     // login form only
     width: 320,
-    height: 464,
+    height: 370,
     resizable: false,
   });
 
-  if (isDev) mainWindow.webContents.openDevTools({mode: 'detach'});
+  if (process.env.NODE_ENV === 'development')
+    mainWindow.webContents.openDevTools({mode: 'detach'});
 
-  mainWindow.loadURL(isDev ? 'http://localhost:9080' : `file://${__dirname}/index.html`);
+  mainWindow.loadURL(process.env.NODE_ENV === 'development' ?
+  'http://localhost:9080' : `file://${__dirname}/index.html`);
 
   mainWindow.on('closed', () => {
     mainWindow = null;

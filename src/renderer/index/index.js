@@ -6,7 +6,7 @@ import '@/styles/common.scss';
 import Vue from 'vue';
 import App from '@/components/App';
 import store from '@/store';
-import appConfig from '@/config.js';
+import appConfig from '@/config';
 
 const {shell, remote} = require('electron');
 

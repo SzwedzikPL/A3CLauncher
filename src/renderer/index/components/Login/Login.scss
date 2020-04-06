@@ -33,6 +33,13 @@
   position: relative;
   padding: 0 5px 10px 5px;
 
+  .form-content {
+
+    &.loading {
+      padding-top: 130px;
+    }
+  }
+
   .form-spinner {
     display: none;
   }
@@ -140,45 +147,14 @@ input:focus {
   text-align: center;
 }
 
-.btn-link {
-  position: relative;
-  color: #595959;
-  font-weight: 300;
-  font-size: 13px;
-  background: #000;
+.btn-link-forum {
+  width: 122px;
+  height: 33px;
+}
 
-  &:hover, &:focus, &:active {
-    color: #969696;
-  }
-
-  &.btn-link-forum {
-    width: 122px;
-    height: 33px;
-  }
-
-  &.btn-link-recovery {
-    width: 160px;
-    height: 33px;
-  }
-
-  & > .btn-spinner {
-    display: none;
-  }
-
-  &:disabled {
-    & > .btn-content {
-      display: none;
-    }
-
-    & > .btn-spinner {
-      display: block;
-      position: absolute;
-      width: 1.4rem;
-      height: 1.4rem;
-      top: calc(50% - 0.7rem);
-      left: calc(50% - 0.7rem);
-    }
-  }
+.btn-link-recovery {
+  width: 160px;
+  height: 33px;
 }
 
 .btn-show-password {

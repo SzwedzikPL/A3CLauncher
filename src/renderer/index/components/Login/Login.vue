@@ -16,7 +16,6 @@
         <form class="form-content" @submit.prevent="loginUser" :class="{loading: waiting & !loginEnabled}">
           <template v-if="loginEnabled">
             <div class="form-group">
-              <!-- TODO: Fix selecting username after logout  -->
               <input type="text" class="form-control" placeholder="Nazwa użytkownika" tabindex="1" v-model="form.username" ref="inputUsername">
             </div>
             <div class="form-group">

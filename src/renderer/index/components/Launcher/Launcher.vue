@@ -22,31 +22,30 @@
           <div class="logo-placeholder"></div>
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')">Graj</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')" ref="tabPlay">Graj</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')">Twórz misje</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')" ref="tabMissions">Twórz misje</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')">Ustawienia</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')" ref="tabSettings">Ustawienia</a>
             </li>
           </ul>
         </div>
-        <div class="user-wrapper">
+        <dropdown class="user-wrapper">
           <img :src="user.avatar" class="user-avatar" />
           <div class="user-data">
             <span class="user-name" v-text="user.name" :style="user.color ? {color: user.color} : null"></span>
             <span class="user-rank" v-text="user.rank"></span>
           </div>
-          <!-- TODO: Add drop controls -->
-          <div class="drop">
+          <template v-slot:options>
             <div class="list-group">
               <a href="#" class="list-group-item list-group-item-action" @click="logout">
-                Wyloguj <i class="fa fa-sign-out"></i>
+                <i class="fa fa-sign-out"></i> Wyloguj
               </a>
             </div>
-          </div>
-        </div>
+          </template>
+        </dropdown>
       </div>
       <div class="launcher-content">
         <keep-alive>
@@ -59,6 +58,7 @@
 
 <script>
 import Page from '@/components/Page.vue';
+import Dropdown from '@/components/Dropdown';
 import Play from './components/Play';
 import Missions from './components/Missions';
 import Settings from './components/Settings';
@@ -77,10 +77,14 @@ export default {
   methods: {
     initWindow() {
       const currentWindow = this.$root.getCurrentWindow();
+      // TODO: saving last size?
       currentWindow.setSize(1040, 620);
       currentWindow.center();
       currentWindow.show();
       this.$emit('ready');
+      setTimeout(() => {
+        this.$refs['tab' + this.currentTabComponent].focus();
+      }, 100);
     },
     logout() {
       this.$store.dispatch('session/logout');
@@ -92,10 +96,14 @@ export default {
       this.currentTabComponent = tab;
     }
   },
-  components: {Play, Missions, Settings}
+  components: {Dropdown, Play, Missions, Settings}
 }
 </script>
 
 <style lang="scss" scoped>
   @import '~./Launcher.scss';
+</style>
+
+<style lang="scss">
+  @import '~./LauncherGlobal.scss';
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown" @click="toggleDown" :class="{active: down}">
+  <div class="dropdown" @click="toggleActive" :class="{active}">
     <slot></slot>
     <div class="dropdown-icon">
       <slot name="icon">
@@ -16,11 +16,22 @@
 export default {
   name: 'Dropdown',
   data: () => ({
-    down: false,
+    active: false,
   }),
+  watch: {
+    active(newValue, oldValue) {
+      if (!newValue)
+        document.removeEventListener('click', this.onDocumentClick);
+    }
+  },
   methods: {
-    toggleDown() {
-      this.down = !this.down;
+    toggleActive() {
+      if (this.active = !this.active)
+        document.addEventListener('click', this.onDocumentClick);
+    },
+    onDocumentClick(event) {
+      if (this.$el.contains(event.target)) return;
+      this.active = false;
     }
   }
 }

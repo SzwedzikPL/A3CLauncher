@@ -4,6 +4,14 @@ const appName = process.env.PRODUCT_NAME;
 
 // Production config
 let config = {
+  loginWindow: {
+    sizeX: 320,
+    sizeY: 370
+  },
+  launcherWindow: {
+    sizeX: 1064,
+    sizeY: 640
+  },
   links: {
     forum: 'https://arma3coop.pl',
     recovery: 'https://arma3coop.pl/ucp.php?mode=sendpassword'

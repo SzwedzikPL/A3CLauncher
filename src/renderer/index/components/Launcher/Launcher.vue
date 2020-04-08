@@ -57,11 +57,16 @@
 </template>
 
 <script>
-import Page from '@/components/Page.vue';
+import appConfig from '@/config';
+import Page from '@/components/Page';
 import Dropdown from '@/components/Dropdown';
+
 import Play from './components/Play';
 import Missions from './components/Missions';
 import Settings from './components/Settings';
+
+const sizeX = appConfig.launcherWindow.sizeX;
+const sizeY = appConfig.launcherWindow.sizeY;
 
 export default {
   name: 'Launcher',
@@ -78,7 +83,8 @@ export default {
     initWindow() {
       const currentWindow = this.$root.getCurrentWindow();
       // TODO: saving last size?
-      currentWindow.setSize(1040, 620);
+      currentWindow.setSize(sizeX, sizeY);
+      currentWindow.setMinimumSize(sizeX, sizeY);
       currentWindow.center();
       currentWindow.show();
       this.$emit('ready');

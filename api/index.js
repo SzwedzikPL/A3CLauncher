@@ -10,6 +10,17 @@ module.exports = app => {
     apiToken = token;
   };
 
+  const verifyToken = (req, res) => {
+    if (req.header('Authorization') !== apiToken) {
+      res.json({
+        error: true,
+        message: 'Niepoprawny token'
+      });
+      return false;
+    }
+    return true;
+  };
+
   // API status
   // On success returns:
   // enabled flag
@@ -27,14 +38,17 @@ module.exports = app => {
   });
 
   app.get(baseURL + '/user', (req, res) => {
+    if (!verifyToken(req, res)) return;
     userApi.user(req, res);
   });
 
   app.get(baseURL + '/mods', (req, res) => {
+    if (!verifyToken(req, res)) return;
     modsApi.modList(req, res);
   });
 
   app.get(baseURL + '/mods/:modId', (req, res) => {
+    if (!verifyToken(req, res)) return;
     modsApi.mod(req, res);
   });
 };

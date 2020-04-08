@@ -48,11 +48,13 @@
 </template>
 
 <script>
+import appConfig from '@/config';
 import credentials from '@/credentials.js';
-import Page from '@/components/Page.vue';
+import Page from '@/components/Page';
 import LinkButton from '@/components/LinkButton';
 
-const pageWidth = 320;
+const sizeX = appConfig.loginWindow.sizeX;
+const sizeY = appConfig.loginWindow.sizeY;
 
 export default {
   name: 'Login',
@@ -72,7 +74,9 @@ export default {
   methods: {
     initWindow() {
       const currentWindow = this.$root.getCurrentWindow();
-      currentWindow.setSize(pageWidth, 370);
+      currentWindow.resizable = true;
+      currentWindow.setMinimumSize(sizeX, sizeY);
+      currentWindow.setSize(sizeX, sizeY);
       currentWindow.center();
       currentWindow.show();
       currentWindow.resizable = false;
@@ -120,8 +124,9 @@ export default {
     updateWindowSize() {
       [0, 10].forEach(delay => setTimeout(() => {
         this.$root.setWindowSize(
-          pageWidth,
-          document.documentElement.scrollHeight
+          sizeX,
+          document.documentElement.scrollHeight,
+          true
         )
       }, delay));
     },

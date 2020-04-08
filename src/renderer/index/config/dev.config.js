@@ -1,10 +1,7 @@
-
 // Dev config applied on production config
-const config = {
+module.exports = {
   api: '/api',
   dev: {
     requestDelay: 0
   }
 };
-
-export default config;

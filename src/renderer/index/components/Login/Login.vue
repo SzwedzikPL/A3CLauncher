@@ -81,16 +81,16 @@ export default {
       currentWindow.show();
       currentWindow.resizable = false;
       this.$emit('ready');
-      this.$nextTick(() => {
-        this.updateWindowSize();
-        this.$store.dispatch('session/init').then(() => {
-          this.loginEnabled = true;
-          this.$nextTick(this.init);
-        }).catch(error => {
-          this.error = error.message;
-        }).finally(() => {
-          this.waiting = false;
-        });
+    },
+    onWindowReady() {
+      this.updateWindowSize();
+      this.$store.dispatch('session/init').then(() => {
+        this.loginEnabled = true;
+        this.$nextTick(this.init);
+      }).catch(error => {
+        this.error = error.message;
+      }).finally(() => {
+        this.waiting = false;
       });
     },
     init() {

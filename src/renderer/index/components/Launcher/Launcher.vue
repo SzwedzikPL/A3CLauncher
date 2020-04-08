@@ -88,9 +88,11 @@ export default {
       currentWindow.center();
       currentWindow.show();
       this.$emit('ready');
+    },
+    onWindowReady() {
       setTimeout(() => {
         this.$refs['tab' + this.currentTabComponent].focus();
-      }, 100);
+      }, 50);
     },
     logout() {
       this.$store.dispatch('session/logout');

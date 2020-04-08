@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Zakładka graj
+  <div class="tab-play">
+
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Zakładka Twórz misje
+  <div class="tab-missions">
+    
   </div>
 </template>
 

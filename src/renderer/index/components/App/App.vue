@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Login v-if="!loggedIn" v-show="pageReady" @ready="onPageReady" ref="login" />
-    <Launcher v-else v-show="pageReady" @ready="onPageReady" ref="launcher" />
+    <Login v-if="!loggedIn" v-show="pageReady" :ready="pageReady" @ready="onPageReady" ref="login" />
+    <Launcher v-else v-show="pageReady" :ready="pageReady" @ready="onPageReady" ref="launcher" />
   </div>
 </template>
 
@@ -37,7 +37,11 @@ export default {
       this.initComponentWindow();
     },
     initComponentWindow() {
-      this.$refs[this.loggedIn ? 'launcher' : 'login'].initWindow();
+      const component = this.$refs[this.loggedIn ? 'launcher' : 'login'];
+      if (component.initWindow)
+        component.initWindow();
+      else
+        console.log(component.$options.name, 'Missing method initWindow');
     }
   },
   components: {Login, Launcher}

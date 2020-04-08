@@ -1,7 +1,7 @@
 {
   "name": "A3CLauncher",
   "productName": "A3C Launcher",
-  "description": "Arma3Coop.pl community game launcher for Windows",
+  "description": "Arma3Coop.pl community game launcher",
   "private": true,
   "version": "0.0.1",
   "repository": {
@@ -41,6 +41,7 @@
     }
   },
   "dependencies": {
+    "ajv": "6.12.0",
     "arch": "2.1.1",
     "axios": "0.19.2",
     "bootstrap": "4.4.1",
@@ -57,6 +58,7 @@
     "xml2js": "0.4.23"
   },
   "devDependencies": {
+    "7zip-bin": "5.0.3",
     "@vue/preload-webpack-plugin": "1.1.1",
     "chalk": "3.0.0",
     "css-loader": "3.4.2",

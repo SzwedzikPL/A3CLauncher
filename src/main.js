@@ -15,16 +15,14 @@ if (process.env.NODE_ENV === 'development') {
 
 app.on('ready', () => {
   mainWindow = new BrowserWindow({
-    // always
+    width: 0,
+    height: 0,
+    show: false,
     frame: false,
     transparent: true,
     webPreferences: {
       nodeIntegration: true
     },
-    // login form only
-    width: 320,
-    height: 370,
-    resizable: false,
   });
 
   if (process.env.NODE_ENV === 'development')

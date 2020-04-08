@@ -1,6 +1,17 @@
 <script>
 // Page base component
 export default {
+  props: {
+    ready: Boolean
+  },
+  watch: {
+    ready(isReady) {
+      if (isReady && this.onWindowReady)
+        this.$nextTick(() => this.onWindowReady());
+      else if (!this.onWindowReady)
+        console.log(this.$options.name, 'Missing method onWindowReady');
+    }
+  },
   destroyed() {
     // Use $parent for calling event because emit
     // won't work after component destruction.

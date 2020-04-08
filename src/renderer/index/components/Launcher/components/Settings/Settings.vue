@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="tab-settings">
     Zakładka ustawienia
   </div>
 </template>

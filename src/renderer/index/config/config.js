@@ -23,12 +23,12 @@ let config = {
 // Apply other configs in dev
 if (process.env.NODE_ENV === 'development') {
   const merge = require('webpack-merge');
-  const devConfig = require('./dev.config.js').default;
+  const devConfig = require('./dev.config.js');
   let localConfig;
 
   // Local config is optional
   try {
-    localConfig = require('./local.config.js').default;
+    localConfig = require('./local.config.js');
   } catch(error) {}
 
   config = merge(config, devConfig, localConfig || {});

@@ -2,8 +2,14 @@ import axios from 'axios';
 import store from '@/store';
 import appConfig from '@/config';
 
+const {remote} = require('electron');
+
 const send = axios.create({
   baseURL: appConfig.api,
+  headers: {
+    'Client': remote.app.name,
+    'Client-Version': remote.app.getVersion(),
+  }
 });
 
 function request(params) {

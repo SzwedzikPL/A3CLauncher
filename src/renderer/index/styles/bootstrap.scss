@@ -37,15 +37,44 @@
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
 
-
-
 // Modifications
+body {
+  color: #8c8c8c;
+}
+
 .form-group {
   position: relative;
 }
 
+.form-control, .form-control:focus, .form-control:disabled, .form-control[readonly] {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  box-shadow: inset rgba(255, 255, 255, 0.28) 0px 0px 6px -2px;
+  font-weight: 200;
+  color: #d0d0d0;
+}
+
+.form-control:focus {
+  box-shadow: inset rgba(255, 255, 255, 0.68) 0px 0px 6px -2px;
+}
+
 .btn {
   box-shadow: #000 1px 1px 0px 0px !important;
+}
+
+.btn-secondary {
+  border: 0;
+  color: #deffcc;
+  background: #6c757d url('~@/assets/button-texture.png');
+
+  &:hover, &:focus, &:active {
+    border: 0;
+    background: #6c757d url('~@/assets/button-texture.png') !important;
+    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px !important;
+  }
+  &:active {
+    box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px !important;
+  }
 }
 
 .btn-success {

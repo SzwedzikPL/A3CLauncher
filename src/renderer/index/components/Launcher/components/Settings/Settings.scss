@@ -1,4 +1,41 @@
 .tab-settings {
+  display: flex;
+  justify-content: flex-start;
+  min-height: inherit;
+}
+.tab-navigation {
+  width: 240px;
+  background: rgba(0,0,0,0.3);
+  border-right: 1px solid #000;
+
+  .list-group {
+    margin-top: 20px;
+
+    button {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      outline: 0;
+
+      &:focus {
+        background: transparent;
+      }
+
+      &.active, &:hover {
+        background: rgba(0,0,0,0.3);
+      }
+
+      &.active, &.active:hover {
+        color: #cacaca;
+      }
+
+      &:hover {
+        color: #8e8e8e;
+      }
+    }
+  }
+}
+.tab-content {
+  width: calc(100% - 240px);
   padding: 20px;
-  
 }

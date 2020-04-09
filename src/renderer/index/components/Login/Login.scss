@@ -118,18 +118,6 @@
   }
 }
 
-input, input:focus {
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  box-shadow: inset rgba(255, 255, 255, 0.28) 0px 0px 6px -2px;
-  font-weight: 200;
-  color: #d0d0d0;
-}
-
-input:focus {
-  box-shadow: inset rgba(255, 255, 255, 0.68) 0px 0px 6px -2px;
-}
-
 .btn-submit {
   font-size: 18px;
   font-weight: 300;

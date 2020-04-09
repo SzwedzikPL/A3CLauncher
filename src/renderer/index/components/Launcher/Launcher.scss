@@ -23,6 +23,12 @@
   z-index: 0;
 }
 
+.launcher-content {
+  position: relative;
+  min-height: calc(100vh - 96px);
+  overflow: scroll;
+}
+
 .logo-wrapper {
   width: 126px;
   position: absolute;

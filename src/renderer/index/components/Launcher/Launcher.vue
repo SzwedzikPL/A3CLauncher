@@ -22,13 +22,19 @@
           <div class="logo-placeholder"></div>
           <ul class="nav">
             <li class="nav-item">
-              <a href="#" class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')" ref="tabPlay">Graj</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')" ref="tabPlay">
+                Graj
+              </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')" ref="tabMissions">Twórz misje</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')" ref="tabMissions">
+                Twórz misje
+              </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')" ref="tabSettings">Ustawienia</a>
+              <a href="#" class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')" ref="tabSettings">
+                Ustawienia <i class="fa fa-exclamation-triangle" style="color: #d81818;text-shadow: none;"></i>
+              </a>
             </li>
           </ul>
         </div>

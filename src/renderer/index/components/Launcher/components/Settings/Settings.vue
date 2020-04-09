@@ -1,13 +1,41 @@
 <template>
   <div class="tab-settings">
-    Zakładka ustawienia
+    <div class="tab-navigation">
+      <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('Paths')}" @click="switchTab('Paths')">
+          Ścieżki <i class="fa fa-exclamation-triangle" style="color: #d81818;text-shadow: none;"></i>
+        </button>
+        <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('ArmaParams')}" @click="switchTab('ArmaParams')">
+          Parametry Arma 3
+        </button>
+      </div>
+    </div>
+    <div class="tab-content">
+      <keep-alive>
+        <component :is="currentTabComponent"></component>
+      </keep-alive>
+    </div>
   </div>
 </template>
 
 <script>
+import Paths from './components/Paths';
+import ArmaParams from './components/ArmaParams';
+
 export default {
   name: 'Settings',
-  components: {}
+  data: () => ({
+    currentTabComponent: 'Paths'
+  }),
+  methods: {
+    tabActive(tab) {
+      return this.currentTabComponent === tab;
+    },
+    switchTab(tab) {
+      this.currentTabComponent = tab;
+    }
+  },
+  components: {Paths, ArmaParams},
 }
 </script>
 

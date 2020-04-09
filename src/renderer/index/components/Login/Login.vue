@@ -50,7 +50,7 @@
 <script>
 import appConfig from '@/config';
 import credentials from '@/credentials.js';
-import Page from '@/components/Page';
+import windowMixin from '@/mixins/window';
 import LinkButton from '@/components/LinkButton';
 
 const sizeX = appConfig.loginWindow.sizeX;
@@ -58,7 +58,7 @@ const sizeY = appConfig.loginWindow.sizeY;
 
 export default {
   name: 'Login',
-  extends: Page,
+  mixins: [windowMixin],
   data: () => ({
     waiting: true,
     autoLogin: false,

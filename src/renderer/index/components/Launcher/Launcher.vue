@@ -55,7 +55,7 @@
       </div>
       <div class="launcher-content">
         <keep-alive>
-          <component :is="currentTabComponent"></component>
+          <component :is="currentTabComponent" ref="currentComponent"></component>
         </keep-alive>
       </div>
     </div>
@@ -64,7 +64,8 @@
 
 <script>
 import appConfig from '@/config';
-import Page from '@/components/Page';
+import windowMixin from '@/mixins/window';
+import tabsMixin from '@/mixins/tabs';
 import Dropdown from '@/components/Dropdown';
 
 import Play from './components/Play';
@@ -76,7 +77,7 @@ const sizeY = appConfig.launcherWindow.sizeY;
 
 export default {
   name: 'Launcher',
-  extends: Page,
+  mixins: [windowMixin, tabsMixin],
   data: () => ({
     currentTabComponent: 'Play'
   }),
@@ -102,12 +103,6 @@ export default {
     },
     logout() {
       this.$store.dispatch('session/logout');
-    },
-    tabActive(tab) {
-      return this.currentTabComponent === tab;
-    },
-    switchTab(tab) {
-      this.currentTabComponent = tab;
     }
   },
   components: {Dropdown, Play, Missions, Settings}

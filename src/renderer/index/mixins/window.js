@@ -1,15 +1,18 @@
-<script>
-// Page base component
 export default {
   props: {
     ready: Boolean
   },
   watch: {
     ready(isReady) {
-      if (isReady && this.onWindowReady)
-        this.$nextTick(() => this.onWindowReady());
-      else if (!this.onWindowReady)
-        console.log(this.$options.name, 'Missing method onWindowReady');
+      if (isReady) this.$nextTick(() => this.onWindowReady());
+    }
+  },
+  methods: {
+    initWindow() {
+      console.log(this.$options.name, 'Missing method initWindow');
+    },
+    onWindowReady() {
+      console.log(this.$options.name, 'Missing method onWindowReady');
     }
   },
   destroyed() {
@@ -24,4 +27,3 @@ export default {
     setTimeout(() => parent.hideWindow(), 200);
   }
 }
-</script>

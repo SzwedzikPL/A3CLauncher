@@ -25,6 +25,10 @@ export default {
     this.initComponentWindow();
   },
   methods: {
+    switchLocation(target) {
+      if (!this.$refs.launcher) return;
+      this.$refs.launcher.switchLocation(target);
+    },
     onPageReady() {
       this.pageReady = true;
     },
@@ -37,11 +41,7 @@ export default {
       this.initComponentWindow();
     },
     initComponentWindow() {
-      const component = this.$refs[this.loggedIn ? 'launcher' : 'login'];
-      if (component.initWindow)
-        component.initWindow();
-      else
-        console.log(component.$options.name, 'Missing method initWindow');
+      this.$refs[this.loggedIn ? 'launcher' : 'login'].initWindow();
     }
   },
   components: {Login, Launcher}

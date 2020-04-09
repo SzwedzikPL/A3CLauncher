@@ -19,21 +19,18 @@
 </template>
 
 <script>
+import tabsMixin from '@/mixins/tabs';
 import Paths from './components/Paths';
 import ArmaParams from './components/ArmaParams';
 
 export default {
   name: 'Settings',
+  mixins: [tabsMixin],
   data: () => ({
     currentTabComponent: 'Paths'
   }),
   methods: {
-    tabActive(tab) {
-      return this.currentTabComponent === tab;
-    },
-    switchTab(tab) {
-      this.currentTabComponent = tab;
-    }
+    
   },
   components: {Paths, ArmaParams},
 }

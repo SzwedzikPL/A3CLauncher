@@ -31,6 +31,11 @@ new Vue({
     isWindowMaximized: false,
   }),
   methods: {
+    switchLocation(link) {
+      const target = link.split('.');
+      if (!target.length) return;
+      this.$refs.app.switchLocation(target);
+    },
     getCurrentWindow() {
       return remote.getCurrentWindow();
     },
@@ -66,5 +71,5 @@ new Vue({
       remote.getCurrentWindow().close();
     }
   },
-  render: h => h(App),
+  render: h => h(App, {ref: 'app'}),
 });

@@ -1,4 +1,5 @@
 import api from '@/api';
+import {getOSTasks} from '@/utils/os';
 
 import defaultAvatar from '@/assets/default-avatar.png';
 
@@ -8,8 +9,19 @@ export default {
     loggedIn: false,
     apiToken: null,
     user: null,
+    osTasks: {
+      arma: [],
+      armaLauncher: []
+    }
   },
-  getters: {},
+  getters: {
+    isArmaRunning(state) {
+      return state.osTasks.arma.length > 0
+    },
+    isArmaLauncherRunning(state) {
+      return state.osTasks.armaLauncher.length > 0
+    }
+  },
   actions: {
     logout({commit}) {
       commit('setUser', null);
@@ -40,7 +52,28 @@ export default {
             resolve(data);
           }).catch(reject);
       });
-    }
+    },
+    checkOSTasks({commit, state}) {
+      return new Promise(async resolve => {
+        const tasks = await getOSTasks();
+        let tasksChanged = false;
+
+        Object.keys(tasks).forEach(taskName => {
+          if (tasksChanged) return;
+          const currentTaskPids = tasks[taskName];
+          const taskPids = state.osTasks[taskName];
+
+          if (!currentTaskPids.length && !taskPids.length) return;
+          if (currentTaskPids.length !== taskPids.length)
+            return tasksChanged = true;
+
+          tasksChanged = !currentTaskPids.every((pid, index) => taskPids[index] === pid);
+        });
+
+        if (tasksChanged) commit('setOSTasks', tasks);
+        resolve();
+      });
+    },
   },
   mutations: {
     setUser(state, user) {
@@ -49,6 +82,9 @@ export default {
     },
     setToken(state, token) {
       state.apiToken = token;
+    },
+    setOSTasks(state, tasks) {
+      state.osTasks = tasks;
     }
   }
 }

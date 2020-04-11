@@ -79,6 +79,7 @@ export default {
   name: 'Launcher',
   mixins: [windowMixin, tabsMixin],
   data: () => ({
+    checkOSTasksTimeout: null,
     currentTabComponent: 'Play'
   }),
   computed: {
@@ -97,9 +98,18 @@ export default {
       this.$emit('ready');
     },
     onWindowReady() {
+      this.checkOSTasks();
+
       setTimeout(() => {
         this.$refs['tab' + this.currentTabComponent].focus();
       }, 50);
+    },
+    checkOSTasks() {
+      this.$store.dispatch('session/checkOSTasks').then(() => {
+        clearTimeout(this.checkOSTasksTimeout);
+        this.checkOSTasksTimeout = setTimeout(
+          this.checkOSTasks, appConfig.osTasksCheckInterval);
+      });
     },
     logout() {
       this.$store.dispatch('session/logout');

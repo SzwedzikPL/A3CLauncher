@@ -1,64 +1,52 @@
-export default {
+const type = {};
+[['string', ''], ['boolean', false], ['number', 0]].forEach(typeData => {
+  type[typeData[0]] = (defaultValue = typeData[1]) => ({
+    type: typeData[0],
+    default: defaultValue,
+  });
+});
+type.object = props => ({
   type: 'object',
-  properties: {
-    lastUsername: {
-      type: 'string',
-      default: '',
-    },
-    autoLogin: {
-      type: 'boolean',
-      default: false,
-    },
-    launcherSize: {
-      type: 'object',
-      properties: {
-        x: {
-          type: 'number',
-          default: 0
-        },
-        y: {
-          type: 'number',
-          default: 0
-        },
-      },
-      default: {},
-      required: ['x', 'y'],
-    },
-    settings: {
-      type: 'object',
-      properties: {
-        paths: {
-          type: 'object',
-          properties: {
-            armaDir: {
-              type: 'string',
-              default: '',
-            },
-            armaExec: {
-              type: 'string',
-              default: '',
-            },
-            modsDir: {
-              type: 'string',
-              default: '',
-            },
-            missionsDir: {
-              type: 'string',
-              default: '',
-            },
-            teamspeakPluginsDir: {
-              type: 'string',
-              default: '',
-            },
-          },
-          default: {},
-          required: ['armaDir', 'armaExec', 'modsDir', 'missionsDir', 'teamspeakPluginsDir']
-        },
-      },
-      default: {},
-      required: ['paths']
-    },
-  },
+  properties: props,
   default: {},
-  required: ['lastUsername', 'autoLogin', 'launcherSize', 'settings'],
-}
+  required: Object.keys(props),
+});
+
+const schema = type.object({
+  lastUsername: type.string(),
+  autoLogin: type.boolean(),
+  launcherSize: type.object({
+    x: type.number(),
+    y: type.number(),
+  }),
+  settings: type.object({
+    arma: type.object({
+      platform: type.string(),
+      skipIntro: type.boolean(),
+      noSplash: type.boolean(),
+      window: type.boolean(),
+      enableHT: type.boolean(),
+      noLogs: type.boolean(),
+      cpuCount: type.object({
+        enabled: type.boolean(),
+        value: type.number(),
+      }),
+      exThreads: type.object({
+        enabled: type.boolean(),
+        value: type.number(),
+      }),
+      malloc: type.object({
+        enabled: type.boolean(),
+        value: type.string(),
+      }),
+    }),
+    paths: type.object({
+      armaDir: type.string(),
+      modsDir: type.string(),
+      missionsDir: type.string(),
+      teamspeakPluginsDir: type.string(),
+    }),
+  }),
+});
+
+export default schema;

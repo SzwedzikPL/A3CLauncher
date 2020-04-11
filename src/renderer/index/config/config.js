@@ -17,7 +17,8 @@ let config = {
     recovery: 'https://arma3coop.pl/ucp.php?mode=sendpassword'
   },
   credentialsService: appName,
-  api: 'https://arma3coop.pl/api'
+  api: 'https://arma3coop.pl/api',
+  osTasksCheckInterval: 2000
 };
 
 // Apply other configs in dev

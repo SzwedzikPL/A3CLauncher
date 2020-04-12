@@ -2,17 +2,63 @@ import arch from 'arch';
 import physicalCpuCount from 'physical-cpu-count';
 
 import electronStore from '../electron';
-import credentials from '@/credentials.js';
+import credentials from '@/credentials';
+import stringtable from '@/stringtable';
 import {isPathDirectory, isPathFile, steamPath} from '@/utils/path';
+import log from '@/log';
 
 const {remote} = require('electron');
 const path = require('path');
+
+const validationError = (source, field, message) => ({
+  source: source ? `Settings.${source}` : 'Settings',
+  params: {field},
+  message,
+});
 
 export default {
   namespaced: true,
   state: electronStore.store,
   getters: {},
   actions: {
+    async parseSettings({commit, dispatch, state}) {
+      // Setup default settings on first run
+      if (state.firstRun) {
+        await dispatch('setupDefaultSettings');
+        commit('doneFirstRun');
+      }
+
+      await dispatch('validateSettings');
+    },
+    async validateSettings({dispatch, state}) {
+      // Validate settings
+      const errors = [];
+      const addError = (tab, field, message) => errors.push({
+        source: tab ? `Settings.${tab}` : 'Settings',
+        params: {field},
+        message,
+      });
+
+      // Paths
+
+      // Check is arma exec in install dir
+      // Check is mods dir writable
+      // Check is missions dir writable
+      // Check is ts3 plugins dir writable
+
+      //addError('Paths', 'modsDir', stringtable.CANT_WRITE_DIR);
+      //addError('Paths', 'teamspeakPluginsDir', stringtable.CANT_WRITE_DIR);
+
+      // Arma
+
+      //WIP
+
+      // Clear all previous errors from settings
+      dispatch('session/clearErrorsFromSource', 'Settings', {root: true});
+
+      // Add new errors if any
+      if (errors.length) dispatch('session/addErrors', errors, {root: true});
+    },
     async setupDefaultSettings({commit, state}) {
       const armaSettings = state.settings.arma;
 
@@ -61,9 +107,28 @@ export default {
 
       commit('setPathSettings', paths);
       commit('setArmaSettings', arma);
+    },
+    async updateSetting({commit, state, dispatch}, setting) {
+      let path = setting.key.split('.');
+      const key = path.pop();
+      let settingObject = state.settings;
+      if (!path.every(key => (settingObject = settingObject[key]) !== undefined))
+        return;
+
+      commit('updateSetting', {path, key, value: setting.value});
+
+      await dispatch('validateSettings');
     }
   },
   mutations: {
+    updateSetting(state, setting) {
+      let settingObject = state.settings;
+      setting.path.forEach(key => settingObject = settingObject[key]);
+      settingObject[setting.key] = setting.value;
+    },
+    doneFirstRun(state) {
+      state.firstRun = false;
+    },
     setPathSettings(state, paths) {
       state.settings.paths = paths;
     },
@@ -74,13 +139,13 @@ export default {
       state.autoLogin = false;
 
       if (state.lastUsername)
-        credentials.delete(state.lastUsername);
+        credentials.delete(state.lastUsername).catch(log.error);
     },
     onLogin(state, form) {
       state.lastUsername = form.username;
 
       if (state.autoLogin = form.remember)
-        credentials.save(form.username, form.password);
+        credentials.save(form.username, form.password).catch(log.error);
     }
   }
 }

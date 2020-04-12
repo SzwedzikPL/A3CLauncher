@@ -16,19 +16,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {app, session},
   actions: {
-    async parseSettings({commit, dispatch, state}) {
-      const settings = state.app.settings;
-
-      // Setup default settings on first run
-      if (Object.values(settings.paths).every(value => value === '')) {
-        await dispatch('app/setupDefaultSettings');
-      }
-
-      await dispatch('validateSettings');
-    },
-    async validateSettings({commit, state}) {
-
-    },
     launchArma({state}) {
       const armaDir = state.app.settings.paths.armaDir;
       const armaSettings = state.app.settings.arma;

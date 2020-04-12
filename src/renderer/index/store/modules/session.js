@@ -1,6 +1,9 @@
 import api from '@/api';
 import {getOSTasks} from '@/utils/os';
 
+let errorCounter = 0;
+let alertCounter = 0;
+
 export default {
   namespaced: true,
   state: {
@@ -10,7 +13,9 @@ export default {
     osTasks: {
       arma: [],
       armaLauncher: []
-    }
+    },
+    errors: [],
+    alerts: []
   },
   getters: {
     isArmaRunning(state) {
@@ -72,8 +77,40 @@ export default {
         resolve();
       });
     },
+    addError({commit}, error) {
+      const id = errorCounter++;
+      commit('addError', Object.assign({id}, error));
+      return id;
+    },
+    addErrors({dispatch}, errors) {
+      return errors.map(error => dispatch('addError', error));
+    },
+    removeError({state, commit}, id) {
+      const index = state.errors.findIndex(error => error.id === id);
+      if (index >= 0) {
+        commit('removeError', index);
+        return true;
+      }
+
+      return false;
+    },
+    clearErrorsFromSource({state, commit}, source) {
+      commit(
+        'setErrors',
+        state.errors.filter(error => !error.source.startsWith(source))
+      );
+    }
   },
   mutations: {
+    setErrors(state, errors) {
+      state.errors = errors;
+    },
+    addError(state, error) {
+      state.errors.push(error);
+    },
+    removeError(state, index) {
+      state.errors.splice(index, 1);
+    },
     setUser(state, user) {
       state.loggedIn = user !== null;
       state.user = user;

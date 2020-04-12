@@ -15,6 +15,7 @@ type.object = props => ({
 const schema = type.object({
   lastUsername: type.string(),
   autoLogin: type.boolean(),
+  firstRun: type.boolean(true),
   launcherSize: type.object({
     x: type.number(),
     y: type.number(),

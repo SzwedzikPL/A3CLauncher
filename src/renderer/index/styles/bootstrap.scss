@@ -38,12 +38,8 @@
 @import "~bootstrap/scss/print";
 
 // Modifications
-body {
-  color: #8c8c8c;
-}
-
-.form-group {
-  position: relative;
+.text-danger {
+  color: #ff1027 !important;
 }
 
 .form-control, .form-control:focus, .form-control:disabled, .form-control[readonly] {
@@ -54,6 +50,29 @@ body {
   color: #d0d0d0;
 }
 
+.form-group {
+  position: relative;
+
+  &.has-error {
+    label {
+      color: #ff1027;
+    }
+
+    .form-control {
+      background: rgba(37, 0, 0, 0.4);
+    }
+  }
+}
+
+.form-text {
+  text-shadow: #000 1px 1px 0px;
+
+  &.form-text-error {
+    color: #ff1027;
+    font-weight: 500;
+  }
+}
+
 .form-control:focus {
   box-shadow: inset rgba(255, 255, 255, 0.68) 0px 0px 6px -2px;
 }
@@ -62,15 +81,23 @@ body {
   box-shadow: #000 1px 1px 0px 0px !important;
 }
 
+.btn, .alert {
+  background-image: url('~@/assets/button-texture.png');
+
+  &:hover, &:focus, &:active {
+    background-image: url('~@/assets/button-texture.png');
+  }
+}
+
 .btn-secondary {
   border: 0;
   color: #deffcc;
-  background: #6c757d url('~@/assets/button-texture.png');
+  background-color: #6c757d;
 
   &:hover, &:focus, &:active {
     border: 0;
-    background: #6c757d url('~@/assets/button-texture.png') !important;
-    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px !important;
+    background-color: #6c757d;
+    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px;
   }
   &:active {
     box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px !important;
@@ -80,24 +107,24 @@ body {
 .btn-success {
   border: 0;
   color: #deffcc;
-  background: #143a00 url('~@/assets/button-texture.png');
+  background-color: #143a00;
 
   &:hover, &:focus, &:active {
     border: 0;
-    background: #143a00 url('~@/assets/button-texture.png') !important;
-    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px !important;
+    background-color: #143a00;
+    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px;
   }
   &:active {
-    box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px !important;
+    box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px;
   }
 }
 
 .alert-danger {
-  background: #450000 url('~@/assets/button-texture.png');
+  background-color: #450000;
   color: #ffb0b0;
   border: 0;
 }
 
 .spinner-border {
-    animation: spinner-border .45s linear infinite;
+  animation: spinner-border .45s linear infinite;
 }

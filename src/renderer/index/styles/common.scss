@@ -2,6 +2,11 @@ html, body {
   background: transparent;
 }
 
+body {
+  color: #8c8c8c;
+  text-shadow: #000 1px 1px 0;
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -45,4 +50,12 @@ html, body {
       vertical-align: 0.05rem;
     }
   }
+}
+
+.icon-error {
+  @extend .fa;
+  @extend .fa-exclamation-triangle;
+
+  color: #d81818;
+  text-shadow: #000 1px 1px 0;
 }

@@ -3,10 +3,10 @@
     <div class="tab-navigation">
       <div class="list-group">
         <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('Paths')}" @click="switchTab('Paths')">
-          Ścieżki <i class="fa fa-exclamation-triangle" style="color: #d81818;text-shadow: none;"></i>
+          Ścieżki <i class="icon-error" v-if="tabErrors.Paths"></i>
         </button>
-        <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('ArmaParams')}" @click="switchTab('ArmaParams')">
-          Parametry Arma 3
+        <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('Arma')}" @click="switchTab('Arma')">
+          Arma 3 <i class="icon-error" v-if="tabErrors.Arma"></i>
         </button>
       </div>
     </div>
@@ -21,18 +21,18 @@
 <script>
 import tabsMixin from '@/mixins/tabs';
 import Paths from './components/Paths';
-import ArmaParams from './components/ArmaParams';
+import Arma from './components/Arma';
 
 export default {
   name: 'Settings',
   mixins: [tabsMixin],
   data: () => ({
+    tabs: ['Paths', 'Arma'],
     currentTabComponent: 'Paths'
   }),
   methods: {
-    
   },
-  components: {Paths, ArmaParams},
+  components: {Paths, Arma},
 }
 </script>
 

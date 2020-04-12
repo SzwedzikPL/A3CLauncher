@@ -52,6 +52,8 @@ import appConfig from '@/config';
 import credentials from '@/credentials.js';
 import windowMixin from '@/mixins/window';
 import LinkButton from '@/components/LinkButton';
+import log from '@/log';
+import stringtable from '@/stringtable';
 
 const sizeX = appConfig.loginWindow.sizeX;
 const sizeY = appConfig.loginWindow.sizeY;
@@ -107,9 +109,9 @@ export default {
           this.autoLogin = true;
           this.form.password = password;
           this.loginUser();
-        }).catch(() => {
-          // TODO: Add logger
-          this.error = 'Odczyt hasła z poświadczeń systemu Windows nie powiódł się.';
+        }).catch(message => {
+          log.error(message);
+          this.error = stringtable.CRED_READ_ERROR;
           this.waiting = false;
         });
       } else {

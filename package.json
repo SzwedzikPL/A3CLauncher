@@ -23,7 +23,6 @@
     "appId": "com.arma3coop.launcher",
     "copyright": "Copyright © 2020 SzwedzikPL",
     "productName": "A3C Launcher",
-    "asar": false,
     "win": {
       "target": [
         "portable",

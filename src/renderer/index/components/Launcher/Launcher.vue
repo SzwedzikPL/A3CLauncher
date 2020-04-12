@@ -23,17 +23,17 @@
           <ul class="nav">
             <li class="nav-item">
               <a href="#" class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')" ref="tabPlay">
-                Graj
+                Graj <i class="icon-error" v-if="tabErrors.Play"></i>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link" :class="{active: tabActive('Missions')}" @click="switchTab('Missions')" ref="tabMissions">
-                Twórz misje
+                Twórz misje <i class="icon-error" v-if="tabErrors.Missions"></i>
               </a>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link" :class="{active: tabActive('Settings')}" @click="switchTab('Settings')" ref="tabSettings">
-                Ustawienia <i class="fa fa-exclamation-triangle" style="color: #d81818;text-shadow: none;"></i>
+                Ustawienia <i class="icon-error" v-if="tabErrors.Settings"></i>
               </a>
             </li>
           </ul>
@@ -81,13 +81,14 @@ export default {
   mixins: [windowMixin, tabsMixin],
   data: () => ({
     defaultAvatar,
+    tabs: ['Play', 'Missions', 'Settings'],
     checkOSTasksTimeout: null,
     currentTabComponent: 'Play'
   }),
   computed: {
     user() {
       return this.$store.state.session.user;
-    }
+    },
   },
   methods: {
     initWindow() {
@@ -101,7 +102,7 @@ export default {
     },
     onWindowReady() {
       this.checkOSTasks();
-      this.$store.dispatch('parseSettings');
+      this.$store.dispatch('app/parseSettings');
 
       setTimeout(() => {
         this.$refs['tab' + this.currentTabComponent].focus();
@@ -111,7 +112,9 @@ export default {
       this.$store.dispatch('session/checkOSTasks').then(() => {
         clearTimeout(this.checkOSTasksTimeout);
         this.checkOSTasksTimeout = setTimeout(
-          this.checkOSTasks, appConfig.osTasksCheckInterval);
+          this.checkOSTasks,
+          appConfig.osTasksCheckInterval
+        );
       });
     },
     logout() {

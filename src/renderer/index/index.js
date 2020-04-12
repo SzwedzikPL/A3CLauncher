@@ -1,12 +1,10 @@
-import '@/styles/bootstrap.scss';
-import '@/styles/font-awesome.scss';
-import '@/styles/fonts.scss';
-import '@/styles/common.scss';
+import '@/styles/index.scss';
 
 import Vue from 'vue';
 import App from '@/components/App';
 import store from '@/store';
 import appConfig from '@/config';
+import stringtable from '@/stringtable';
 
 const {shell, remote} = require('electron');
 
@@ -24,6 +22,13 @@ Vue.config.productionTip = false;
 // });
 // win.loadURL(isDev ? 'http://localhost:9080/console.html' : `file://${__dirname}/console.html`);
 
+
+Vue.use({
+  install(Vue) {
+    Vue.prototype.$stringtable = stringtable;
+  }
+});
+
 new Vue({
   el: '#app',
   store,
@@ -31,6 +36,14 @@ new Vue({
     isWindowMaximized: false,
   }),
   methods: {
+    selectDirDialog(params) {
+      console.log('selectDirDialog', params);
+      return remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
+        title: params.title || undefined,
+        defaultPath: params.defaultPath || undefined,
+        properties: ['openDirectory', 'dontAddToRecent']
+      });
+    },
     switchLocation(link) {
       const target = link.split('.');
       if (!target.length) return;

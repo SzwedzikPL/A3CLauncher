@@ -22,7 +22,8 @@ log.debug('Loaded app store', store.store);
 if (!valid) log.debug('App store validation errors', validate.errors);
 
 // Update electron store on each vuex store mutation
-export function subscriber(mutation, state) {
+export function subscriber({type}, state) {
+  if (!type.startsWith('app/')) return;
   store.store = state.app;
 }
 

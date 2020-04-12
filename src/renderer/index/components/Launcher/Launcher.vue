@@ -39,7 +39,7 @@
           </ul>
         </div>
         <dropdown class="user-wrapper">
-          <img :src="user.avatar" class="user-avatar" />
+          <img :src="user.avatar || defaultAvatar" class="user-avatar" />
           <div class="user-data">
             <span class="user-name" v-text="user.name" :style="user.color ? {color: user.color} : null"></span>
             <span class="user-rank" v-text="user.rank"></span>
@@ -67,6 +67,7 @@ import appConfig from '@/config';
 import windowMixin from '@/mixins/window';
 import tabsMixin from '@/mixins/tabs';
 import Dropdown from '@/components/Dropdown';
+import defaultAvatar from '@/assets/default-avatar.png';
 
 import Play from './components/Play';
 import Missions from './components/Missions';
@@ -79,6 +80,7 @@ export default {
   name: 'Launcher',
   mixins: [windowMixin, tabsMixin],
   data: () => ({
+    defaultAvatar,
     checkOSTasksTimeout: null,
     currentTabComponent: 'Play'
   }),
@@ -99,6 +101,7 @@ export default {
     },
     onWindowReady() {
       this.checkOSTasks();
+      this.$store.dispatch('parseSettings');
 
       setTimeout(() => {
         this.$refs['tab' + this.currentTabComponent].focus();

@@ -1,8 +1,6 @@
 import api from '@/api';
 import {getOSTasks} from '@/utils/os';
 
-import defaultAvatar from '@/assets/default-avatar.png';
-
 export default {
   namespaced: true,
   state: {
@@ -55,8 +53,8 @@ export default {
     },
     checkOSTasks({commit, state}) {
       return new Promise(async resolve => {
-        const tasks = await getOSTasks();
         let tasksChanged = false;
+        const tasks = await getOSTasks();
 
         Object.keys(tasks).forEach(taskName => {
           if (tasksChanged) return;

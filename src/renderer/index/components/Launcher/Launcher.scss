@@ -25,8 +25,7 @@
 
 .launcher-content {
   position: relative;
-  min-height: calc(100vh - 96px);
-  overflow: scroll;
+  height: calc(100vh - 96px);
 }
 
 .logo-wrapper {

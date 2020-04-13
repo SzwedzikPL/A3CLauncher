@@ -1,5 +1,7 @@
 import {enumerateValues, HKEY} from 'registry-js';
 
+import log from '@/utils/log';
+
 const path = require('path');
 const fs = require('fs');
 
@@ -19,6 +21,8 @@ function getSteamPath() {
 }
 
 export const steamPath = getSteamPath();
+
+log.debug('Steam path =', `"${steamPath}"`);
 
 export async function isPathType(type, path) {
   return new Promise(resolve => {

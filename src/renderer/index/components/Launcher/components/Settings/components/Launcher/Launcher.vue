@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h4>Wygląd</h4>
+
 
   </div>
 </template>
@@ -8,11 +10,11 @@
 import settingsMixin from '@/mixins/settings';
 
 export default {
-  name: 'Arma',
+  name: 'Application',
   mixins: [settingsMixin],
   computed: {
-    arma() {
-      return this.$store.state.app.settings.arma;
+    application() {
+      return this.$store.state.app.settings.application;
     },
   },
 }

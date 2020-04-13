@@ -1,4 +1,4 @@
-import log from '@/log';
+import log from '@/utils/log';
 
 const appName = process.env.PRODUCT_NAME;
 

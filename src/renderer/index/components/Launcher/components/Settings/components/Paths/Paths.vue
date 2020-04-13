@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import formMixin from '@/mixins/form';
+import settingsMixin from '@/mixins/settings';
 import {steamPath} from '@/utils/path';
 
 const {remote} = require('electron');
@@ -74,7 +74,7 @@ const selectDirDefaultPaths = {
 
 export default {
   name: 'Paths',
-  mixins: [formMixin],
+  mixins: [settingsMixin],
   computed: {
     paths() {
       return this.$store.state.app.settings.paths;
@@ -82,23 +82,11 @@ export default {
   },
   methods: {
     selectDir(varName) {
-      const params = {};
-        params.defaultPath = this.paths[varName] ;
-
-      this.$root.selectDirDialog({
-        title: selectDirTitles[varName] || undefined,
-        defaultPath: this.paths[varName] || selectDirDefaultPaths[varName] || undefined,
-      }).then(data => {
-        if (data.canceled || !data.filePaths.length) return;
-
-        this.updatingSetting = true;
-        this.$store.dispatch('app/updateSetting', {
-          key: `paths.${varName}`,
-          value: data.filePaths[0],
-        }).then(() => {
-          this.updatingSetting = false;
-        });
-      });
+      this.selectDirDialog(
+        `paths.${varName}`,
+        selectDirTitles[varName],
+        this.paths[varName] || selectDirDefaultPaths[varName]
+      );
     }
   },
   components: {}

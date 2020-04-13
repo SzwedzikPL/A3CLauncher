@@ -2,10 +2,10 @@ import arch from 'arch';
 import physicalCpuCount from 'physical-cpu-count';
 
 import electronStore from '../electron';
-import credentials from '@/credentials';
+import credentials from '@/utils/credentials';
 import stringtable from '@/stringtable';
 import {isPathDirectory, isPathFile, steamPath} from '@/utils/path';
-import log from '@/log';
+import log from '@/utils/log';
 
 const {remote} = require('electron');
 const path = require('path');
@@ -22,6 +22,9 @@ export default {
   getters: {},
   actions: {
     async parseSettings({commit, dispatch, state}) {
+      log.debug('Parsing settings...');
+      log.debug('First run:', state.firstRun);
+
       // Setup default settings on first run
       if (state.firstRun) {
         await dispatch('setupDefaultSettings');
@@ -29,8 +32,10 @@ export default {
       }
 
       await dispatch('validateSettings');
+      log.debug('Settings parsed');
     },
     async validateSettings({dispatch, state}) {
+      log.debug('Validating settings...');
       // Validate settings
       const errors = [];
       const addError = (tab, field, message) => errors.push({
@@ -57,9 +62,11 @@ export default {
       dispatch('session/clearErrorsFromSource', 'Settings', {root: true});
 
       // Add new errors if any
+      log.debug('Settings validated, errors:', errors.length);
       if (errors.length) dispatch('session/addErrors', errors, {root: true});
     },
     async setupDefaultSettings({commit, state}) {
+      log.debug('Setting default settings...');
       const armaSettings = state.settings.arma;
 
       // Copy all settings options
@@ -79,7 +86,7 @@ export default {
         const armaDir = path.join(steamPath, 'steamapps', 'common', 'Arma 3');
         if (await isPathDirectory(armaDir))
           paths.armaDir = armaDir;
-      }
+      } else log.debug('Missing steamPath');
 
       if (paths.armaDir)
         paths.modsDir = paths.armaDir;
@@ -107,6 +114,9 @@ export default {
 
       commit('setPathSettings', paths);
       commit('setArmaSettings', arma);
+      log.debug('Default settings set');
+      log.debug('Paths default settings', paths);
+      log.debug('Arma default settings', arma);
     },
     async updateSetting({commit, state, dispatch}, setting) {
       let path = setting.key.split('.');

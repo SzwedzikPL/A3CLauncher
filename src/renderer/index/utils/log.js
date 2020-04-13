@@ -11,10 +11,8 @@ if (process.env.NODE_ENV === 'development') {
 
 function parseArguments(logArguments) {
   return Array.from(logArguments).map(argument => {
-    if (typeof argument === 'object')
-      return JSON.stringify(argument, null, '  ');
-    else
-      return argument;
+    if (typeof argument !== 'object') return argument;
+    return JSON.stringify(argument, null, '  ');
   });
 }
 

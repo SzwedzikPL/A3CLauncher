@@ -1,7 +1,7 @@
 import ElectronStore from 'electron-store';
 import Ajv from 'ajv';
 
-import log from '@/log';
+import log from '@/utils/log';
 import schema from './schema';
 
 const store = new ElectronStore();
@@ -24,6 +24,7 @@ if (!valid) log.debug('App store validation errors', validate.errors);
 // Update electron store on each vuex store mutation
 export function subscriber({type}, state) {
   if (!type.startsWith('app/')) return;
+  log.debug('Updaing electron store');
   store.store = state.app;
 }
 

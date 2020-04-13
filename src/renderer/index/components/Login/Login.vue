@@ -49,10 +49,10 @@
 
 <script>
 import appConfig from '@/config';
-import credentials from '@/credentials.js';
+import credentials from '@/utils/credentials.js';
 import windowMixin from '@/mixins/window';
 import LinkButton from '@/components/LinkButton';
-import log from '@/log';
+import log from '@/utils/log';
 import stringtable from '@/stringtable';
 
 const sizeX = appConfig.loginWindow.sizeX;

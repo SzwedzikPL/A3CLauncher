@@ -25,5 +25,6 @@ export default {
     // This fixes blink of previous page component after
     // showing window.
     setTimeout(() => parent.hideWindow(), 200);
-  }
+  },
+  _isWindow: true,
 }

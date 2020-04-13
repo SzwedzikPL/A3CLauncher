@@ -10,6 +10,7 @@ app.on('ready', () => {
     frame: false,
     transparent: true,
     webPreferences: {
+      webSecurity: process.env.NODE_ENV !== 'development',
       nodeIntegration: true
     },
   });

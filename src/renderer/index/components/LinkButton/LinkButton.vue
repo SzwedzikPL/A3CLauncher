@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import log from '@/log';
+import log from '@/utils/log';
 
 export default {
   name: 'LinkButton',

@@ -1,19 +1,16 @@
-import {getComponentSource} from '@/utils/tabs';
+import {getComponentSource, onComponentCreated} from '@/utils/tabs';
 
 export default {
   data: () => ({
     tabs: [],
     currentTabComponent: null
   }),
-  created() {
-    if (this._source) return;
-    this._source = getComponentSource(this);
-  },
+  created: onComponentCreated,
   computed: {
     tabErrors() {
       const errors = this.$store.state.session.errors;
       const tabErrors = {};
-      const sourcePrefix = this._source || '';
+      const sourcePrefix = this.$options._source || '';
 
       this.tabs.forEach(tabName => {
         const source = sourcePrefix ? `${sourcePrefix}.${tabName}` : tabName;
@@ -42,4 +39,5 @@ export default {
       this.currentTabComponent = tab;
     }
   },
+  _source: null,
 };

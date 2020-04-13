@@ -24,7 +24,10 @@ export default {
     },
     isArmaLauncherRunning(state) {
       return state.osTasks.armaLauncher.length > 0
-    }
+    },
+    invalidSettings(state) {
+      return state.errors.map(error => error.setting).filter(setting => !!setting);
+    },
   },
   actions: {
     logout({commit}) {
@@ -80,26 +83,22 @@ export default {
     },
     addError({commit}, error) {
       const id = errorCounter++;
-      commit('addError', Object.assign({id}, error));
+      commit('addError', Object.assign({}, error, {id}));
       return id;
     },
     addErrors({dispatch}, errors) {
       return errors.map(error => dispatch('addError', error));
     },
     removeError({state, commit}, id) {
-      const index = state.errors.findIndex(error => error.id === id);
-      if (index >= 0) {
-        commit('removeError', index);
-        return true;
-      }
+      const errorIndex = state.errors.findIndex(error => error.id === id);
+      if (errorIndex === -1) return false;
 
-      return false;
+      commit('removeError', errorIndex);
+      return true;
     },
     clearErrorsFromSource({state, commit}, source) {
-      commit(
-        'setErrors',
-        state.errors.filter(error => !error.source.startsWith(source))
-      );
+      // Filter out errors from source
+      commit('setErrors', state.errors.filter(error => !error.source.startsWith(source)));
     }
   },
   mutations: {

@@ -9,10 +9,9 @@ export default {
     fieldErrors() {
       const fields = {};
       this.$store.state.session.errors.forEach(error => {
-        if (error.source !== this.$options._source) return;
-        if (!error.params || !error.params.field) return;
+        if (error.source !== this.$options._source || !error.setting) return;
 
-        const field = error.params.field;
+        const field = error.setting.split('.').pop();
         if (!fields[field]) fields[field] = [];
         fields[field].push(error.message);
       });

@@ -3,12 +3,6 @@ import stringtable from '@/stringtable';
 
 const validationCache = {};
 
-const validationError = (source, field, message) => ({
-  source: source ? `Settings.${source}` : 'Settings',
-  params: {field},
-  message,
-});
-
 const shouldValidate = (varName, currentValue) => {
   const cache = validationCache[varName];
 
@@ -21,7 +15,7 @@ const shouldValidate = (varName, currentValue) => {
 
 const validateSetting = (varName, value, validator) => {
   if (!shouldValidate(varName, value)) return;
-  const valid = validator(value);
+  const valid = !!validator(value, varName);
   log.debug('Validated setting:', varName, 'valid:', valid);
   validationCache[varName] = {value, valid};
 };
@@ -30,36 +24,35 @@ export default async function validateSettings({dispatch, state}) {
   log.debug('Validating settings...');
   // Validate settings
   const errors = [];
-  const addError = (tab, field, message) => errors.push({
+  const addError = (tab, setting, message) => errors.push({
     source: tab ? `Settings.${tab}` : 'Settings',
-    params: {field},
+    setting,
     message,
-  });
+  }) && false;
 
   // Paths
   const pathsSettings = state.settings.paths;
 
   // Check is arma exec in install dir
-  validateSetting('paths.armaDir', pathsSettings.armaDir, value => {
+  validateSetting('paths.armaDir', pathsSettings.armaDir, (value, setting) => {
     // TODO
     return true;
   });
 
   // Check is mods dir writable
-  validateSetting('paths.modsDir', pathsSettings.modsDir, value => {
+  validateSetting('paths.modsDir', pathsSettings.modsDir, (value, setting) => {
     // TODO
-    // addError('Paths', 'modsDir', stringtable.CANT_WRITE_DIR);
     return true;
   });
 
   // Check is missions dir writable
-  validateSetting('paths.missionsDir', pathsSettings.missionsDir, value => {
+  validateSetting('paths.missionsDir', pathsSettings.missionsDir, (value, setting) => {
     // TODO
     return true;
   });
 
   // Check is ts3 plugins dir writable
-  validateSetting('paths.teamspeakPluginsDir', pathsSettings.teamspeakPluginsDir, value => {
+  validateSetting('paths.teamspeakPluginsDir', pathsSettings.teamspeakPluginsDir, (value, setting) => {
     // TODO
     return true;
   });
@@ -68,6 +61,24 @@ export default async function validateSettings({dispatch, state}) {
   const armaSettings = state.settings.arma;
 
   // TODO
+
+  // Launcher
+  const launcherSettings = state.settings.launcher;
+
+  // Check is background image file present and correct type
+  validateSetting('launcher.bgImage', launcherSettings.bgImage, (value, setting) => {
+    // TODO
+
+    // return addError('Launcher', setting, stringtable.CANT_WRITE_DIR);
+
+    return true;
+  });
+
+  // Check is background opacity in proper range
+  validateSetting('launcher.bgOpacity', launcherSettings.bgOpacity, (value, setting) => {
+    // TODO
+    return true;
+  });
 
   // Clear all previous errors from settings
   dispatch('session/clearErrorsFromSource', 'Settings', {root: true});

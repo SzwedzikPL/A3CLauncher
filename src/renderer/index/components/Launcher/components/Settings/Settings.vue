@@ -2,6 +2,9 @@
   <div class="tab-settings">
     <div class="tab-navigation">
       <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('Launcher')}" @click="switchTab('Launcher')">
+          Aplikacja <i class="icon-error" v-if="tabErrors.Launcher"></i>
+        </button>
         <button type="button" class="list-group-item list-group-item-action" :class="{active: tabActive('Paths')}" @click="switchTab('Paths')">
           Ścieżki <i class="icon-error" v-if="tabErrors.Paths"></i>
         </button>
@@ -20,6 +23,7 @@
 
 <script>
 import tabsMixin from '@/mixins/tabs';
+import Launcher from './components/Launcher';
 import Paths from './components/Paths';
 import Arma from './components/Arma';
 
@@ -27,12 +31,12 @@ export default {
   name: 'Settings',
   mixins: [tabsMixin],
   data: () => ({
-    tabs: ['Paths', 'Arma'],
+    tabs: ['Launcher', 'Paths', 'Arma'],
     currentTabComponent: 'Paths'
   }),
   methods: {
   },
-  components: {Paths, Arma},
+  components: {Launcher, Paths, Arma},
 }
 </script>
 

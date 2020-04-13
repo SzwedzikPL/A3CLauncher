@@ -4,6 +4,7 @@ import log from '@/utils/log';
 
 const path = require('path');
 const fs = require('fs');
+const {remote} = require('electron');
 
 function getSteamPath() {
   for (const dir of ['', 'WOW6432Node']) {
@@ -20,8 +21,16 @@ function getSteamPath() {
   return null;
 }
 
-export const steamPath = getSteamPath();
+export const documentsPath = remote.app.getPath('documents');
+log.debug('Documents path =', `"${documentsPath}"`);
 
+export const picturesPath = remote.app.getPath('pictures');
+log.debug('Pictures path =', `"${picturesPath}"`);
+
+export const appDataPath = remote.app.getPath('appData');
+log.debug('AppData path =', `"${appDataPath}"`);
+
+export const steamPath = getSteamPath();
 log.debug('Steam path =', `"${steamPath}"`);
 
 export async function isPathType(type, path) {

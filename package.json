@@ -49,6 +49,7 @@
     "font-awesome": "4.7.0",
     "keytar": "5.4.0",
     "klaw-sync": "6.0.0",
+    "lodash.debounce": "4.0.8",
     "physical-cpu-count": "2.0.0",
     "registry-js": "1.9.0",
     "tail": "2.0.3",

@@ -36,13 +36,19 @@ new Vue({
     isWindowMaximized: false,
   }),
   methods: {
-    selectDirDialog(params) {
-      console.log('selectDirDialog', params);
+    selectDialog(params, properties) {
       return remote.dialog.showOpenDialog(remote.getCurrentWindow(), {
         title: params.title || undefined,
         defaultPath: params.defaultPath || undefined,
-        properties: ['openDirectory', 'dontAddToRecent']
+        filters: params.filters || [],
+        properties
       });
+    },
+    selectDirDialog(params) {
+      return this.selectDialog(params, ['openDirectory', 'dontAddToRecent']);
+    },
+    selectFileDialog(params) {
+      return this.selectDialog(params, ['openFile', 'dontAddToRecent']);
     },
     switchLocation(link) {
       const target = link.split('.');

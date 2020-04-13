@@ -10,6 +10,7 @@ export default {
     loggedIn: false,
     apiToken: null,
     user: null,
+    bgOpacityInput: null,
     osTasks: {
       arma: [],
       armaLauncher: []
@@ -102,6 +103,9 @@ export default {
     }
   },
   mutations: {
+    setBackgroundOpacityInput(state, value) {
+      state.bgOpacityInput = value;
+    },
     setErrors(state, errors) {
       state.errors = errors;
     },

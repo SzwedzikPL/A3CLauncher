@@ -53,7 +53,15 @@
 .form-group {
   position: relative;
 
+  & > .icon-error {
+    display: none;
+  }
+
   &.has-error {
+    & > .icon-error {
+      display: inline;
+    }
+
     label {
       color: #ff1027;
     }

@@ -1,7 +1,11 @@
 <template>
   <button type="button" class="btn btn-link" @click="openLink" :disabled="opening">
     <span class="btn-spinner spinner-border"></span>
-    <span class="btn-content">{{ name }} <i class="fa fa-external-link"></i></span>
+    <span class="btn-content">
+      <slot>
+        {{ name }} <i class="fa fa-external-link"></i>
+      </slot>
+    </span>
   </button>
 </template>
 
@@ -25,9 +29,9 @@ export default {
         // Give OS some time for opening default browser
         setTimeout(() => {
           this.opening = false;
-        }, 500);
+        }, 1000);
       }).catch(error => {
-        log.error('Error opening link', name, error);
+        log.error('Error opening link', this.link, error);
         this.opening = false;
       });
     },

@@ -54,9 +54,7 @@
 
 <script>
 import settingsMixin from '@/mixins/settings';
-import {steamPath} from '@/utils/path';
-
-const {remote} = require('electron');
+import {steamPath, documentsPath, appDataPath} from '@/utils/path';
 
 const selectDirTitles = {
   armaDir: 'Wybierz folder instalacji Arma 3',
@@ -68,8 +66,8 @@ const selectDirTitles = {
 const selectDirDefaultPaths = {
   armaDir: steamPath || '\\',
   modsDir: steamPath || '\\',
-  missionsDir: remote.app.getPath('documents'),
-  teamspeakPluginsDir: remote.app.getPath('appData'),
+  missionsDir: documentsPath,
+  teamspeakPluginsDir: appDataPath,
 };
 
 export default {

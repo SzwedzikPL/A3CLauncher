@@ -16,7 +16,7 @@
     </div>
     <div class="logo-wrapper"><div class="logo"></div></div>
     <div class="window-content">
-      <div class="launcher-background"></div>
+      <div class="launcher-background" :style="backgroundStyles"></div>
       <div class="launcher-header">
         <div class="navigation">
           <div class="logo-placeholder"></div>
@@ -76,6 +76,9 @@ import Settings from './components/Settings';
 const sizeX = appConfig.launcherWindow.sizeX;
 const sizeY = appConfig.launcherWindow.sizeY;
 
+const path = require('path');
+const {pathToFileURL} = require('url');
+
 export default {
   name: 'Launcher',
   mixins: [windowMixin, tabsMixin],
@@ -88,6 +91,18 @@ export default {
   computed: {
     user() {
       return this.$store.state.session.user;
+    },
+    backgroundStyles() {
+      const launcher = this.$store.state.app.settings.launcher;
+      const opacityInput = this.$store.state.session.bgOpacityInput;
+      const styles = [{
+        opacity: opacityInput !== null ? opacityInput : launcher.bgOpacity
+      }];
+
+      if (launcher.bgImage) styles.push({
+        backgroundImage: `url(${pathToFileURL(path.resolve(launcher.bgImage))})`
+      });
+      return styles;
     },
   },
   methods: {

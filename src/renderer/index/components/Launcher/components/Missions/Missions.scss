@@ -1,0 +1,29 @@
+.tab-missions {
+  text-align: center;
+  padding-top: 75px;
+
+  .missions-title {
+    margin: 0;
+  }
+
+  .missions-desc {
+    color: #585858;
+    text-transform: uppercase;
+    font-size: 1rem;
+  }
+
+  .feedback-info {
+    margin-top: 40px;
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    .btn-link-feedback {
+      font-size: 1rem;
+      width: 100px;
+      height: 33px;
+      padding: 0;
+    }
+  }
+}

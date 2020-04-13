@@ -47,6 +47,10 @@ const schema = type.object({
       missionsDir: type.string(),
       teamspeakPluginsDir: type.string(),
     }),
+    launcher: type.object({
+      bgImage: type.string(),
+      bgOpacity: type.number(0.12),
+    }),
   }),
 });
 

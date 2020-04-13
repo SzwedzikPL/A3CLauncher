@@ -14,11 +14,13 @@ let config = {
   },
   links: {
     forum: 'https://arma3coop.pl',
-    recovery: 'https://arma3coop.pl/ucp.php?mode=sendpassword'
+    recovery: 'https://arma3coop.pl/ucp.php?mode=sendpassword',
+    feedback: 'https://arma3coop.pl/viewforum.php?f=33'
   },
   credentialsService: appName,
   api: 'https://arma3coop.pl/api',
-  osTasksCheckInterval: 2000
+  osTasksCheckInterval: 2000,
+  backgroundImageExtensions: ['jpg', 'jpeg', 'png', 'gif'],
 };
 
 // Apply other configs in dev

@@ -117,7 +117,7 @@ export default {
     },
     onWindowReady() {
       this.checkOSTasks();
-      this.$store.dispatch('app/parseSettings');
+      this.$store.dispatch('app/validateSettings');
 
       setTimeout(() => {
         this.$refs['tab' + this.currentTabComponent].focus();

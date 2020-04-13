@@ -8,19 +8,43 @@ import schema from './schema';
 const store = new ElectronStore();
 
 const validator = new Ajv({
+  allErrors: true,
   useDefaults: true,
   removeAdditional: 'all',
 });
 
-let data = store.store;
+let storeData = store.store;
 
 const validate = validator.compile(schema);
-const valid = validate(data);
 
-store.store = data;
+if (!validate(storeData)) {
+  const errors = validate.errors;
 
+  // get default store state from validator
+  let defaultData = {};
+  validate(defaultData);
+
+  const index = (obj, key) => key ? obj[key] : obj;
+
+  for (const error of errors) {
+    log.error('App store validation error:', error.dataPath, error.message);
+
+    let path = error.dataPath.split('.');
+    const key = path.pop();
+
+    // Get data objects references
+    const dataRef = path.reduce(index, storeData);
+    const defaultDataRef = path.reduce(index, defaultData);
+
+    dataRef[key] = defaultDataRef[key];
+  };
+
+  log.error('Replaced', errors.length, 'invalid app store values with defaults');
+}
+
+// Save data in store
+store.store = storeData;
 log.debug('Loaded app store', store.store);
-if (!valid) log.debug('App store validation errors', validate.errors);
 
 const updateStore = debounce(state => {
   log.debug('Saving electron store');

@@ -24,6 +24,7 @@
     "copyright": "Copyright © 2020 SzwedzikPL",
     "productName": "A3C Launcher",
     "win": {
+      "icon": "resources/app.ico",
       "target": [
         "portable",
         "zip"

@@ -5,4 +5,9 @@ export default {
 
   CRED_READ_ERROR: 'Odczyt hasła z poświadczeń systemu Windows nie powiódł się.',
   CANT_WRITE_DIR: 'Brak uprawnień zapisu do wybranego katalogu. Zmień uprawnienia katalogu lub uruchom launcher jako Administrator.',
+
+  REQUEST_FAIL_CODE: code => `Błąd odpowiedzi serwera ${code}`,
+  NETWORK_ERROR: 'Błąd sieci',
+  REQUEST_ABORTED: 'Zapytanie anulowane',
+  REQUEST_TIMEOUT: 'Brak odpowiedzi serwera'
 }

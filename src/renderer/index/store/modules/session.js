@@ -1,3 +1,4 @@
+import log from '@/utils/log';
 import api from '@/api';
 import {getOSTasks} from '@/utils/os';
 
@@ -15,6 +16,7 @@ export default {
       arma: [],
       armaLauncher: []
     },
+    ownArmaProcess: false,
     errors: [],
     alerts: []
   },
@@ -40,6 +42,8 @@ export default {
 
         api.login(form.username, form.password)
         .then(data => {
+          log.debug('Logging in as', form.username, 'remember:', form.remember);
+
           commit('setUser', data.user);
           commit('setToken', data.token);
           commit('app/onLogin', form, {root: true});
@@ -62,6 +66,10 @@ export default {
     },
     checkOSTasks({commit, state}) {
       return new Promise(async resolve => {
+        // Don't check os tasks if we've launched
+        // our own arma process, there's no point for now
+        if (state.ownArmaProcess) return resolve();
+
         let tasksChanged = false;
         const tasks = await getOSTasks();
 
@@ -77,7 +85,10 @@ export default {
           tasksChanged = !currentTaskPids.every((pid, index) => taskPids[index] === pid);
         });
 
-        if (tasksChanged) commit('setOSTasks', tasks);
+        if (tasksChanged) {
+          log.debug('OS Tasks changed', tasks);
+          commit('setOSTasks', tasks);
+        }
         resolve();
       });
     },
@@ -127,5 +138,8 @@ export default {
     addArmaTask(state, pid) {
       state.osTasks.arma.push(pid);
     },
+    ownArmaProcess(state, value) {
+      state.ownArmaProcess = value;
+    }
   }
 }

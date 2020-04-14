@@ -16,7 +16,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {app, session},
   actions: {
-    launchArma({state, commit}, params = {}) {
+    launchArma({state, commit, dispatch}, params = {}) {
       return new Promise(resolve => {
         const armaDir = state.app.settings.paths.armaDir;
         const armaSettings = state.app.settings.arma;
@@ -39,13 +39,18 @@ const store = new Vuex.Store({
 
         log.info('Arma launched with pid', armaProcess.pid);
         commit('session/addArmaTask', armaProcess.pid);
+        commit('session/ownArmaProcess', true);
 
         armaProcess.on('close', code => {
           log.info('Arma closed with code', code);
+          commit('session/ownArmaProcess', false);
+
           if (code !== 0) {
             // TODO: Possible error?
             // TODO: Ask user if he want's rpt logs from session?
           }
+
+          dispatch('session/checkOSTasks');
         });
 
         resolve(armaProcess.pid);

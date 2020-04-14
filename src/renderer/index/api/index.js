@@ -1,11 +1,16 @@
 import axios from 'axios';
+
+import log from '@/utils/log';
 import store from '@/store';
 import appConfig from '@/config';
+
+import translateError from './translateError';
 
 const {remote} = require('electron');
 
 const send = axios.create({
   baseURL: appConfig.api,
+  timeout: 30*1000,
   headers: {
     'Client': remote.app.name,
     'Client-Version': remote.app.getVersion(),
@@ -23,14 +28,19 @@ function request(params) {
 
   return new Promise((resolve, reject) => {
     if (process.env.NODE_ENV === 'development') {
-      const promiseResolve = resolve, promiseReject = reject;
-      resolve = arg => setTimeout(() => promiseResolve(arg), appConfig.dev.requestDelay);
-      reject = arg => setTimeout(() => promiseReject(arg), appConfig.dev.requestDelay);
+      const delay = fn => arg => setTimeout(() => fn(arg), appConfig.dev.requestDelay);
+      resolve = delay(resolve);
+      reject = delay(reject);
     }
 
+    log.debug('Sending request to', params.url);
     send(params).then(result => {
       const data = result.data;
-      if (data.error) return reject(data);
+      log.debug('Request to', result.config.url, 'responded with status', result.status);
+      if (data.error) {
+        log.debug('Request error response: ', data);
+        return reject(data);
+      }
       resolve(data);
     }).catch(error => {
       let message;
@@ -38,7 +48,9 @@ function request(params) {
       else if (error.response) message = error.response.statusText;
       else message = error.toString();
 
-      reject({message});
+      log.debug('Request to', error.config.url, 'resulted in error:', message);
+
+      reject({message: translateError(message)});
     });
   });
 }

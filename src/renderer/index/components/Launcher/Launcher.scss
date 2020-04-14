@@ -75,8 +75,9 @@
       cursor: pointer;
       color: #888888;
       text-transform: uppercase;
+      outline: 0;
 
-      &:hover {
+      &:hover, &:focus {
         color: #d5d5d5;
       }
 

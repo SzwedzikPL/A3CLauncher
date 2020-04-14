@@ -123,6 +123,9 @@ export default {
     },
     setOSTasks(state, tasks) {
       state.osTasks = tasks;
-    }
+    },
+    addArmaTask(state, pid) {
+      state.osTasks.arma.push(pid);
+    },
   }
 }

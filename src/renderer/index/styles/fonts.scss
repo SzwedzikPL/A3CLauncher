@@ -8,7 +8,7 @@ $kanitWeights: (
   600: SemiBold,
   700: Bold,
   800: ExtraBold,
-  900: Black
+  900: 'Black'
 );
 
 @mixin font-kanit($name, $style, $weight) {

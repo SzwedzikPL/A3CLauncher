@@ -1,8 +1,12 @@
 import logger from 'electron-log';
 
+const {remote} = require('electron');
+
+const args = remote.process.argv;
+
 const isDev = process.env.NODE_ENV === 'development';
-const debugEnabled = isDev || process.argv.includes('-debug');
-const infoEnabled = isDev || debugEnabled || process.argv.includes('-logs');
+const debugEnabled = isDev || args.includes('-debug');
+const infoEnabled = isDev || debugEnabled || args.includes('-logs');
 
 // Disable writing logs to files in dev
 if (process.env.NODE_ENV === 'development') {

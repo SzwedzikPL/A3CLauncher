@@ -16,23 +16,39 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {app, session},
   actions: {
-    launchArma({state}, params) {
-      const armaDir = state.app.settings.paths.armaDir;
-      const armaSettings = state.app.settings.arma;
+    launchArma({state, commit}, params = {}) {
+      return new Promise(resolve => {
+        const armaDir = state.app.settings.paths.armaDir;
+        const armaSettings = state.app.settings.arma;
 
-      const armaExec = path.join(armaDir, getArmaExecName(armaSettings.platform));
-      // TODO: mods
-      const armaParams = getArmaParams(Object.assign({}, armaSettings, params));
+        const armaExec = path.join(armaDir, getArmaExecName(armaSettings.platform));
+        // TODO: mods
+        const armaParams = getArmaParams(Object.assign({}, armaSettings, params));
 
-      log.debug('Launching arma', armaExec, armaParams);
-      const armaProcess = spawn(armaExec, armaParams, {detached: true});
+        log.debug('Launching arma', armaExec, armaParams);
+        const armaProcess = spawn(armaExec, armaParams, {detached: true});
 
-      armaProcess.on('close', code => {
-        log.debug('Arma closed with code', code);
-        if (code !== 0) {
-          // TODO: Possible error?
-          // TODO: Ask user if he want's rpt logs from session?
+        armaProcess.on('error', error => {
+          log.error('Arma process error:', error.message);
+        });
+
+        if (!armaProcess.pid) {
+          log.error('Arma launch failed');
+          return resolve(null);
         }
+
+        log.info('Arma launched with pid', armaProcess.pid);
+        commit('session/addArmaTask', armaProcess.pid);
+
+        armaProcess.on('close', code => {
+          log.info('Arma closed with code', code);
+          if (code !== 0) {
+            // TODO: Possible error?
+            // TODO: Ask user if he want's rpt logs from session?
+          }
+        });
+
+        resolve(armaProcess.pid);
       });
     }
   }

@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import log from '@/utils/log';
+import {getArmaExecName, getArmaParams} from '@/utils/arma';
+
 import app from './modules/app';
 import session from './modules/session';
-
 import {subscriber} from './electron';
-
-import {getArmaExecName, getArmaParams} from '@/utils/arma';
 
 const path = require('path');
 const {spawn} = require('child_process');
@@ -16,19 +16,19 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {app, session},
   actions: {
-    launchArma({state}) {
+    launchArma({state}, params) {
       const armaDir = state.app.settings.paths.armaDir;
       const armaSettings = state.app.settings.arma;
 
-      const armaProc = spawn(
-        path.join(armaDir, getArmaExecName(armaSettings.platform)),
-        getArmaParams(armaSettings),
-        {
-          detached: true
-        }
-      );
+      const armaExec = path.join(armaDir, getArmaExecName(armaSettings.platform));
+      // TODO: mods
+      const armaParams = getArmaParams(Object.assign({}, armaSettings, params));
 
-      armaProc.on('close', code => {
+      log.debug('Launching arma', armaExec, armaParams);
+      const armaProcess = spawn(armaExec, armaParams, {detached: true});
+
+      armaProcess.on('close', code => {
+        log.debug('Arma closed with code', code);
         if (code !== 0) {
           // TODO: Possible error?
           // TODO: Ask user if he want's rpt logs from session?

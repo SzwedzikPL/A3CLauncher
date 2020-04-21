@@ -42,6 +42,8 @@ export default async function validateSettings({dispatch, state}) {
   // Check is mods dir writable
   validateSetting('paths.modsDir', pathsSettings.modsDir, (value, setting) => {
     // TODO
+    // return addError('Paths', setting, stringtable.CANT_WRITE_DIR);
+
     return true;
   });
 

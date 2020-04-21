@@ -1,4 +1,7 @@
 import tasklist from 'tasklist';
+import {enumerateValues, HKEY} from 'registry-js';
+
+const path = require('path');
 
 export async function getOSTasks() {
   const status = {
@@ -14,4 +17,14 @@ export async function getOSTasks() {
   }
 
   return status;
+}
+
+export function getRegistrySoftwareValue(regPath, name) {
+  const values = enumerateValues(HKEY.HKEY_LOCAL_MACHINE, path.join('SOFTWARE', regPath));
+
+  for (const value of values) {
+    if (value.name === name) return value.data;
+  }
+
+  return null;
 }

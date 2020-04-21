@@ -1,17 +1,13 @@
 <template>
   <div class="window login-window">
-    <div class="window-handler">
-      <button type="button" @click="$root.minimizeWindow">
-        <i class="fa fa-minus"></i>
-      </button>
-      <button type="button" @click="$root.closeWindow">
-        <i class="fa fa-times"></i>
-      </button>
-    </div>
+    <WindowHandler />
     <div class="window-content">
-      <div class="logo"></div>
-      <div class="title">Community Launcher</div>
-      <div class="form" :class="{waiting: waiting}">
+      <span class="window-shadow"></span>
+      <div class="login-header" v-once>
+        <span class="logo"></span>
+        <span class="logo-title">Community Launcher</span>
+      </div>
+      <div class="login-form" :class="{waiting: waiting}">
         <div class="form-spinner spinner-border"></div>
         <form class="form-content" @submit.prevent="loginUser" :class="{loading: waiting & !loginEnabled}">
           <template v-if="loginEnabled">
@@ -20,7 +16,7 @@
             </div>
             <div class="form-group">
               <input :type="showPassword ? 'text' : 'password'" class="form-control" placeholder="Hasło" tabindex="2" v-model="form.password" ref="inputPassword">
-              <a class="btn btn-show-password" @click="toggleShowPassword" v-if="!autoLogin">
+              <a class="btn btn-transparent btn-show-password" @click="toggleShowPassword" v-if="!autoLogin">
                 <i class="fa fa-eye" v-if="!showPassword"></i>
                 <i class="fa fa-eye-slash" v-else></i>
               </a>
@@ -34,7 +30,7 @@
               <label @click="toggleRemember">Zapamiętaj logowanie <i class="fa fa-question-circle" title="Przy kolejnym uruchomieniu zostaniesz zalogowany automatycznie używając ostatnich danych."></i></label>
             </div>
           </template>
-          <div class="alert alert-danger" v-if="error" :class="{'text-center': !loginEnabled}" v-text="error"></div>
+          <div class="alert alert-danger text-center" v-if="error" v-text="error"></div>
           <button type="submit" class="btn btn-success btn-submit" tabindex="4" v-if="loginEnabled">Zaloguj</button>
           <hr />
           <div class="link-buttons">
@@ -52,6 +48,7 @@ import appConfig from '@/config';
 import credentials from '@/utils/credentials.js';
 import windowMixin from '@/mixins/window';
 import LinkButton from '@/components/LinkButton';
+import WindowHandler from '@/components/WindowHandler';
 import log from '@/utils/log';
 import stringtable from '@/stringtable';
 
@@ -85,7 +82,7 @@ export default {
       this.$emit('ready');
     },
     onWindowReady() {
-      this.updateWindowSize();
+      this.updateWindowSize(true);
       this.$store.dispatch('session/init').then(() => {
         this.loginEnabled = true;
         this.$nextTick(this.init);
@@ -123,12 +120,12 @@ export default {
     focusInput() {
       this.$refs['input' + (this.form.username ? 'Password' : 'Username')].focus();
     },
-    updateWindowSize() {
+    updateWindowSize(center = false) {
       [0, 10].forEach(delay => setTimeout(() => {
         this.$root.setWindowSize(
           sizeX,
           document.documentElement.scrollHeight,
-          true
+          center
         )
       }, delay));
     },
@@ -152,7 +149,7 @@ export default {
       });
     }
   },
-  components: {LinkButton}
+  components: {WindowHandler, LinkButton}
 }
 </script>
 

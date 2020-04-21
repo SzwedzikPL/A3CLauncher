@@ -1,0 +1,55 @@
+.btn {
+  display: inline-block;
+  font-weight: 300;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  background-color: transparent;
+  background-image: url('~@/assets/button-texture.png');
+  border: 0;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  outline: 0;
+  box-shadow: #000 1px 1px 0px 0px;
+
+  &:active {
+    box-shadow: inset #000 1px 1px 0px 1px;
+  }
+}
+
+.btn-transparent {
+  background-image: none;
+}
+
+.btn-success {
+  color: $light;
+  background-color: $success;
+
+  &:hover, &:focus, &:active {
+    background-color: lighten($success, 2.5);
+  }
+
+  &:active {
+    color: darken($light, 2);
+    background-color: darken($success, 2);
+  }
+}
+
+.btn-secondary {
+  border: 0;
+  color: #deffcc;
+  background-color: #6c757d;
+
+  &:hover, &:focus, &:active {
+    border: 0;
+    background-color: #6c757d;
+    box-shadow: #000 1px 1px 0px 0px, inset rgba(31, 152, 24, 0.52) 0px 0px 10px;
+  }
+  &:active {
+    box-shadow: #000 1px 1px 0px 0px, inset #000 0px 0px 10px !important;
+  }
+}

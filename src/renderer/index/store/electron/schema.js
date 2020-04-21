@@ -1,15 +1,3 @@
-import arch from 'arch';
-import physicalCpuCount from 'physical-cpu-count';
-
-import {steamPath, documentsPath, appDataPath} from '@/utils/path';
-
-const path = require('path');
-
-const armaDir = steamPath ? path.join(steamPath, 'steamapps', 'common', 'Arma 3') : '';
-const missionsDir = path.join(documentsPath, 'Arma 3', 'missions');
-const teamspeakPluginsDir = path.join(appDataPath, 'TS3Client', 'plugins');
-const exThreads = physicalCpuCount >= 4 ? 7 : (physicalCpuCount == 2 ? 3 : 0);
-
 const type = {};
 [['string', ''], ['boolean', false], ['number', 0]].forEach(typeData => {
   type[typeData[0]] = (defaultValue = typeData[1]) => ({
@@ -25,6 +13,7 @@ type.object = props => ({
 });
 
 const schema = type.object({
+  firstRun: type.boolean(true),
   lastUsername: type.string(),
   autoLogin: type.boolean(),
   launcherSize: type.object({
@@ -33,19 +22,19 @@ const schema = type.object({
   }),
   settings: type.object({
     arma: type.object({
-      platform: type.string(arch()),
+      platform: type.string(),
       skipIntro: type.boolean(),
-      noSplash: type.boolean(true),
+      noSplash: type.boolean(),
       window: type.boolean(),
-      enableHT: type.boolean(true),
+      enableHT: type.boolean(),
       noLogs: type.boolean(),
       cpuCount: type.object({
         enabled: type.boolean(),
-        value: type.number(physicalCpuCount),
+        value: type.number(),
       }),
       exThreads: type.object({
         enabled: type.boolean(),
-        value: type.number(exThreads),
+        value: type.number(),
       }),
       malloc: type.object({
         enabled: type.boolean(),
@@ -53,14 +42,14 @@ const schema = type.object({
       }),
     }),
     paths: type.object({
-      armaDir: type.string(armaDir),
-      modsDir: type.string(armaDir),
-      missionsDir: type.string(missionsDir),
-      teamspeakPluginsDir: type.string(teamspeakPluginsDir),
+      armaDir: type.string(),
+      modsDir: type.string(),
+      missionsDir: type.string(),
+      teamspeakPluginsDir: type.string(),
     }),
     launcher: type.object({
       bgImage: type.string(),
-      bgOpacity: type.number(0.12),
+      bgOpacity: type.number(),
     }),
   }),
 });

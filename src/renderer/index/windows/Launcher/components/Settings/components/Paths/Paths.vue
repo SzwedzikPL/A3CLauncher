@@ -54,7 +54,7 @@
 
 <script>
 import settingsMixin from '@/mixins/settings';
-import {steamPath, documentsPath, appDataPath} from '@/utils/path';
+import {getArmaPath, documentsPath, appDataPath} from '@/utils/path';
 
 const selectDirTitles = {
   armaDir: 'Wybierz folder instalacji Arma 3',
@@ -64,8 +64,8 @@ const selectDirTitles = {
 };
 
 const selectDirDefaultPaths = {
-  armaDir: steamPath || '\\',
-  modsDir: steamPath || '\\',
+  armaDir: getArmaPath() || '\\',
+  modsDir: getArmaPath() || '\\',
   missionsDir: documentsPath,
   teamspeakPluginsDir: appDataPath,
 };

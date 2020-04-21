@@ -1,0 +1,12 @@
+.alert {
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: .25rem;
+  background-image: url('~@/assets/button-texture.png');
+}
+
+.alert-danger {
+  background-color: $danger;
+  color: lighten($danger, 65);
+}

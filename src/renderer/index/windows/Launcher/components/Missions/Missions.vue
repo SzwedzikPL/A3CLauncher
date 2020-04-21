@@ -1,6 +1,7 @@
 <template>
   <div class="tab-missions">
-    <span class="missions-desc">Niedostępne w wersji demo</span>
+    <img src="https://media.giphy.com/media/YQitE4YNQNahy/giphy.gif" />
+    <h4 class="missions-desc">Moduł w budowie</h4>
 
     <div class="feedback-info">
       <p>Masz pomysł jakie funkcje powinny się tutaj znaleźć?</p>

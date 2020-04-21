@@ -1,9 +1,14 @@
+*, ::after, ::before {
+  box-sizing: border-box;
+}
+
 html, body {
   background: transparent;
+  margin: 0;
 }
 
 body {
-  color: #8c8c8c;
+  color: $defaultColor;
   text-shadow: #000 1px 1px 0;
 }
 
@@ -15,40 +20,42 @@ body {
   font-family: 'Kanit', sans-serif;
 }
 
-#app > .window {
-  border: 1px solid #3a3a3a;
+ul {
+  margin: 0;
 }
 
-.window-handler {
-  position: relative;
-  z-index: 2;
-  text-align: right;
-  box-shadow: #FFF 0px 0px 136px -1px, inset rgba(255, 255, 255, 0.28) 0px -11px 18px -15px;
-  border-bottom: 1px solid #444444;
-  padding: 0 10px;
-  -webkit-app-region: drag;
+a {
+  text-decoration: none;
+}
 
-  button {
-    background: transparent;
-    border: 0;
-    color: #3c3c3c;
-    text-shadow: #000000 1px 1px 0px;
-    outline: none;
-    -webkit-app-region: no-drag;
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: .5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
 
-    &:hover, &:focus {
-      color: #8a8a8a;
-    }
+.h1, h1 {
+  font-size: 2.5rem;
+}
+.h2, h2 {
+  font-size: 2rem;
+}
+.h3, h3 {
+  font-size: 1.75rem;
+}
+.h4, h4 {
+  font-size: 1.5rem;
+}
+.h5, h5 {
+  font-size: 1.25rem;
+}
+.h6, h6 {
+  font-size: 1rem;
+}
 
-    .fa-minus {
-      vertical-align: -2px;
-    }
-
-    .fa-window-maximize, .fa-window-restore {
-      font-size: 0.8rem;
-      vertical-align: 0.05rem;
-    }
-  }
+#app > .window {
+  border: 1px solid $appBorderColor;
+  background: #000 url('~@/assets/bg-texture.png') repeat;
 }
 
 .icon-error {

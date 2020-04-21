@@ -24,8 +24,9 @@ export default {
   methods: {
     openLink() {
       this.opening = true;
-      this.$root.openLink(this.link).then(() => {
+      this.$root.openLink(this.link).then(url => {
         this.$emit('opened');
+        log.debug('Opened link', this.link, url);
         // Give OS some time for opening default browser
         setTimeout(() => {
           this.opening = false;
@@ -57,7 +58,7 @@ export default {
 
     &:disabled {
       & > .btn-content {
-        display: none;
+        opacity: 0;
       }
 
       & > .btn-spinner {

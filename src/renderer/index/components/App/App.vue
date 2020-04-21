@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Login from '@/components/Login';
-import Launcher from '@/components/Launcher';
+import Login from '@/windows/Login';
+import Launcher from '@/windows/Launcher';
 
 export default {
   name: 'App',

@@ -74,7 +74,7 @@ new Vue({
         const link = appConfig.links[linkName];
         if (!link) return reject('Unknown link: ' + linkName);
 
-        shell.openExternal(link).then(resolve).catch(reject);
+        shell.openExternal(link).then(() => resolve(link)).catch(reject);
       });
     },
     maximizeWindow() {

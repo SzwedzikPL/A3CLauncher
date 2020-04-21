@@ -1,26 +1,16 @@
 <template>
   <div class="window launcher-window">
-    <div class="window-handler">
-      <button type="button" @click="$root.minimizeWindow">
-        <i class="fa fa-minus"></i>
-      </button>
-      <!-- <button type="button" @click="$root.unmaximizeWindow" v-if="$root.isWindowMaximized">
-        <i class="fa fa-window-restore"></i>
-      </button>
-      <button type="button" @click="$root.maximizeWindow" v-if="!$root.isWindowMaximized">
-        <i class="fa fa-window-maximize"></i>
-      </button> -->
-      <button type="button" @click="$root.closeWindow">
-        <i class="fa fa-times"></i>
-      </button>
+    <WindowHandler />
+    <div class="logo-wrapper" v-once>
+      <div class="logo"></div>
     </div>
-    <div class="logo-wrapper"><div class="logo"></div></div>
     <div class="window-content">
       <div class="launcher-background" :style="backgroundStyles"></div>
       <div class="launcher-header">
         <div class="navigation">
-          <div class="logo-placeholder"></div>
-          <ul class="nav">
+          <div class="logo-placeholder" v-once></div>
+          <div class="intro-title" v-if="firstRun">Wstępna konfiguracja</div>
+          <ul class="nav" v-else>
             <li class="nav-item">
               <a href="#" class="nav-link" :class="{active: tabActive('Play')}" @click="switchTab('Play')" ref="tabPlay">
                 Graj <i class="icon-error" v-if="tabErrors.Play"></i>
@@ -54,7 +44,8 @@
         </dropdown>
       </div>
       <div class="launcher-content">
-        <keep-alive>
+        <Intro v-if="firstRun" />
+        <keep-alive v-else>
           <component :is="currentTabComponent" ref="currentComponent"></component>
         </keep-alive>
       </div>
@@ -67,8 +58,10 @@ import appConfig from '@/config';
 import windowMixin from '@/mixins/window';
 import tabsMixin from '@/mixins/tabs';
 import Dropdown from '@/components/Dropdown';
+import WindowHandler from '@/components/WindowHandler';
 import defaultAvatar from '@/assets/default-avatar.png';
 
+import Intro from './components/Intro';
 import Play from './components/Play';
 import Missions from './components/Missions';
 import Settings from './components/Settings';
@@ -91,6 +84,9 @@ export default {
   computed: {
     user() {
       return this.$store.state.session.user;
+    },
+    firstRun() {
+      return this.$store.state.app.firstRun;
     },
     backgroundStyles() {
       const launcher = this.$store.state.app.settings.launcher;
@@ -134,9 +130,9 @@ export default {
     },
     logout() {
       this.$store.dispatch('session/logout');
-    }
+    },
   },
-  components: {Dropdown, Play, Missions, Settings}
+  components: {WindowHandler, Dropdown, Intro, Play, Missions, Settings}
 }
 </script>
 

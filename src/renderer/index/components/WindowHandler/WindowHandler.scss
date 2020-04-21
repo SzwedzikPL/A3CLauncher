@@ -1,0 +1,35 @@
+@import '~@/styles/variables.scss';
+
+.window-handler {
+  position: relative;
+  z-index: $layerWindowHandler;
+  text-align: right;
+  box-shadow: inset rgba(255, 255, 255, 0.28) 0px -11px 18px -15px;
+  background: #000 url('~@/assets/bg-texture.png') repeat;
+  border-bottom: 1px solid lighten($appBorderColor, 3);
+  padding: 0 10px;
+  -webkit-app-region: drag;
+
+  button {
+    background: transparent;
+    border: 0;
+    color: #3c3c3c;
+    text-shadow: #000000 1px 1px 0px;
+    outline: none;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+
+    &:hover, &:focus {
+      color: #8a8a8a;
+    }
+
+    .fa-minus {
+      vertical-align: -2px;
+    }
+
+    .fa-window-maximize, .fa-window-restore {
+      font-size: 0.8rem;
+      vertical-align: 0.05rem;
+    }
+  }
+}

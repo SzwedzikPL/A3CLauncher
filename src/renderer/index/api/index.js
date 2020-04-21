@@ -3,17 +3,16 @@ import axios from 'axios';
 import log from '@/utils/log';
 import store from '@/store';
 import appConfig from '@/config';
+import {appId, appVersion} from '@/utils/electron';
 
 import translateError from './translateError';
-
-const {remote} = require('electron');
 
 const send = axios.create({
   baseURL: appConfig.api,
   timeout: 30*1000,
   headers: {
-    'Client': remote.app.name,
-    'Client-Version': remote.app.getVersion(),
+    'App': appId,
+    'App-Version': appVersion,
   }
 });
 

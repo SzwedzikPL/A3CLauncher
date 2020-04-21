@@ -7,7 +7,15 @@ const DirectoryNamedWebpackPlugin = require("directory-named-webpack-plugin");
 
 const packageConfig = require('../package.json');
 
-process.env.PRODUCT_NAME = packageConfig.build.productName;
+process.env.DIST_PATH = path.resolve(__dirname, '../dist');
+
+// Ugly workaround for imporing axios adapter in electron-renderer
+// https://github.com/webpack/webpack/issues/7953
+const axiosPackagePath = '../node_modules/axios/package.json';
+const fs = require('fs');
+const axiosPackage = require(path.resolve(__dirname, axiosPackagePath));
+delete axiosPackage.browser;
+fs.writeFileSync(path.resolve(__dirname, axiosPackagePath), JSON.stringify(axiosPackage));
 
 const rendererConfig = {
   devtool: process.env.NODE_ENV !== 'production' ? '#cheap-module-eval-source-map' : false,
@@ -109,20 +117,26 @@ const rendererConfig = {
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': `"${process.env.NODE_ENV || 'development'}"`,
+      'process.env.PRODUCT_NAME': `"${packageConfig.build.productName}"`,
+      'process.env.PRODUCT_VERSION': `"${packageConfig.version}"`,
+      'process.env.PRODUCT_ID': `"${packageConfig.build.appId}"`,
+    }),
   ],
   resolve: {
     plugins: [
       new DirectoryNamedWebpackPlugin({
         honorIndex: true,
         include: [
-          path.join(__dirname, '../src'),
+          path.resolve(__dirname, '../src'),
         ]
       })
     ],
     alias: {
-      '@': path.join(__dirname, '../src/renderer/index'),
-      '@console': path.join(__dirname, '../src/renderer/console'),
+      '@': path.resolve(__dirname, '../src/renderer/index'),
+      '@console': path.resolve(__dirname, '../src/renderer/console'),
       'vue$': 'vue/dist/vue.esm.js'
     },
     extensions: ['.js', '.vue', '.json', '.css', '.node', '.vue']
@@ -130,4 +144,4 @@ const rendererConfig = {
   target: 'electron-renderer'
 }
 
-module.exports = rendererConfig
+module.exports = rendererConfig;

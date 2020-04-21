@@ -1,6 +1,5 @@
 import log from '@/utils/log';
-
-const appName = process.env.PRODUCT_NAME;
+import {appName} from '@/utils/electron';
 
 // Production config
 let config = {
@@ -21,6 +20,7 @@ let config = {
   api: 'https://arma3coop.pl/api',
   osTasksCheckInterval: 2000,
   backgroundImageExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+  storeSchemaCompatibilityRange: '>=0.0.1',
 };
 
 // Apply other configs in dev

@@ -1,8 +1,11 @@
 import ElectronStore from 'electron-store';
 import Ajv from 'ajv';
-import debounce from 'lodash.debounce';
+import debounce from 'debounce-fn';
+import semver from 'semver';
 
 import log from '@/utils/log';
+import {appVersion} from '@/utils/electron';
+import appConfig from '@/config';
 import schema from './schema';
 
 const store = new ElectronStore();
@@ -13,8 +16,8 @@ const validator = new Ajv({
   removeAdditional: 'all',
 });
 
-let storeData = store.store;
-
+// Reset store if app version is incompatible with schema
+let storeData = semver.satisfies(appVersion, appConfig.storeSchemaCompatibilityRange) ? store.store : {};
 const validate = validator.compile(schema);
 
 if (!validate(storeData)) {
@@ -49,7 +52,7 @@ log.debug('Loaded app store', store.store);
 const updateStore = debounce(state => {
   log.debug('Saving electron store');
   store.store = state.app;
-}, 250);
+}, {wait: 250});
 
 // Update electron store on each vuex store mutation
 export function subscriber({type}, state) {

@@ -1,0 +1,164 @@
+.tab-intro {
+  height: inherit;
+}
+
+$nonActiveColor: #4e4e4e;
+$activePrimaryColor: #d9d9d9;
+$activeColor: #1a9200;
+
+$borderTransition: 0.1s;
+
+$lineTransition: 0.2s;
+
+.steps-box {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.steps-content {
+  display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 0 20px 20px 20px;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+ul.steps {
+  list-style: none;
+  display: flex;
+  margin: 20px 0;
+  box-shadow: inset rgba(255, 255, 255, 0.1) 0px -31px 34px -27px;
+  padding: 20px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  justify-content: space-between;
+
+  li.step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 1rem;
+    text-align: center;
+
+    .step-icon {
+      position: relative;
+      z-index: 3;
+      border-radius: 50%;
+      background: $activePrimaryColor;
+      color: $activePrimaryColor;
+      width: 1.6rem;
+      height: 1.6rem;
+      display: block;
+      border: 0.8rem solid $activeColor;
+      transition: border $borderTransition;
+
+      i {
+        position: absolute;
+        display: block;
+        top: -0.5rem;
+        text-shadow: none;
+        left: -0.5rem;
+        font-size: 1rem;
+        transform: scale(1);
+        transition: transform $borderTransition;
+        transition-delay: $borderTransition;
+      }
+    }
+
+    .step-title {
+      color: $activeColor;
+      display: flex;
+      flex-grow: 1;
+      line-height: 1.1rem;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      top: 0.65rem;
+      height: 0.2rem;
+    }
+
+    &:before {
+      width: 100%;
+      left: 0;
+      background: $nonActiveColor;
+    }
+
+    &:after {
+      width: 100%;
+      z-index: 1;
+      left: 50%;
+      right: -50%;
+      background: $activeColor;
+      transition: width $lineTransition;
+      transition-delay: $borderTransition;
+    }
+
+    &:first-child::before {
+      width: 50%;
+      left: 50%;
+    }
+
+    &:last-child::before {
+      width: 50%;
+      right: 50%;
+    }
+
+    &:last-child::after {
+      width: 0%;
+    }
+
+    &.active {
+      &::after {
+        width: 0%;
+        transition-delay: 0;
+      }
+
+      .step-icon {
+        border: 0.2rem solid $activeColor;
+        transition-delay: $lineTransition + $borderTransition;
+
+        i {
+          transform: scale(0);
+          transition-delay: $lineTransition + $borderTransition;
+        }
+      }
+
+      .step-title {
+        color: $nonActiveColor;
+      }
+    }
+
+    &.active ~ .step {
+      &::after {
+        width: 0%;
+      }
+
+      .step-icon {
+        background: $nonActiveColor;
+        border: 0rem solid $activeColor;
+
+        i {
+          transform: scale(0);
+        }
+      }
+
+      .step-title {
+        color: $nonActiveColor;
+      }
+    }
+  }
+}

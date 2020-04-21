@@ -1,4 +1,12 @@
-@import '~./bootstrap.scss';
+@import '~./variables.scss';
+
 @import '~./font-awesome.scss';
 @import '~./fonts.scss';
 @import '~./common.scss';
+
+@import '~./components/forms.scss';
+@import '~./components/nav.scss';
+@import '~./components/buttons.scss';
+@import '~./components/alerts.scss';
+@import '~./components/spinner.scss';
+@import '~./components/text.scss';

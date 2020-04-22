@@ -1,11 +1,16 @@
 @import '~@/styles/variables.scss';
 
+#app > .window.login-window {
+  // Fix for some window resizes hiding right border
+  width: calc(100vw - 1px);
+}
+
 .login-window .window-content {
   padding: 10px;
   user-select: none;
 }
 
-.window-shadow {
+.login-header-shadow {
   position: absolute;
   top: 0;
   left: 0;

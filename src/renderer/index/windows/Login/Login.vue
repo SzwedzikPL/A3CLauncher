@@ -1,8 +1,8 @@
 <template>
   <div class="window login-window">
-    <WindowHandler />
-    <div class="window-content">
-      <span class="window-shadow"></span>
+    <WindowHandler ref="windowHandler" />
+    <div class="window-content" ref="windowContent">
+      <span class="login-header-shadow" v-once></span>
       <div class="login-header" v-once>
         <span class="logo"></span>
         <span class="logo-title">Community Launcher</span>
@@ -45,12 +45,12 @@
 
 <script>
 import appConfig from '@/config';
+import stringtable from '@/stringtable';
+import log from '@/utils/log';
 import credentials from '@/utils/credentials.js';
 import windowMixin from '@/mixins/window';
 import LinkButton from '@/components/LinkButton';
 import WindowHandler from '@/components/WindowHandler';
-import log from '@/utils/log';
-import stringtable from '@/stringtable';
 
 const sizeX = appConfig.loginWindow.sizeX;
 const sizeY = appConfig.loginWindow.sizeY;
@@ -72,6 +72,7 @@ export default {
   }),
   methods: {
     initWindow() {
+      log.debug('Initing', this.$options.name, 'window...');
       const currentWindow = this.$root.getCurrentWindow();
       currentWindow.resizable = true;
       currentWindow.setMinimumSize(sizeX, sizeY);
@@ -80,8 +81,10 @@ export default {
       currentWindow.show();
       currentWindow.resizable = false;
       this.$emit('ready');
+      log.debug(this.$options.name, 'window inited');
     },
     onWindowReady() {
+      log.debug(this.$options.name, 'window ready');
       this.updateWindowSize(true);
       this.$store.dispatch('session/init').then(() => {
         this.loginEnabled = true;
@@ -121,13 +124,18 @@ export default {
       this.$refs['input' + (this.form.username ? 'Password' : 'Username')].focus();
     },
     updateWindowSize(center = false) {
-      [0, 10].forEach(delay => setTimeout(() => {
-        this.$root.setWindowSize(
-          sizeX,
-          document.documentElement.scrollHeight,
-          center
-        )
-      }, delay));
+      this.setWindowSize(center);
+      this.$nextTick(() => this.setWindowSize(center));
+    },
+    setWindowSize(center) {
+      const handlerH = this.$refs.windowHandler.$el.offsetHeight;
+      const contentH = this.$refs.windowContent.offsetHeight;
+
+      this.$root.setWindowSize(
+        sizeX,
+        handlerH + contentH,
+        center
+      )
     },
     toggleRemember() {
       this.form.remember = !this.form.remember;

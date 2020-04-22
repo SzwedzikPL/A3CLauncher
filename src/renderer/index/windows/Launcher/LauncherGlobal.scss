@@ -12,27 +12,32 @@
     width: 100%;
     height: auto;
     z-index: 1;
-    background: #0d0d0d;
+    background: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
 
     .list-group {
       margin-top: 50px;
+      background: #000 url('~@/assets/button-texture.png');
 
       .list-group-item {
         color: #8b8b8b;
-        background-color: #0f0f0f;
+        background: rgba(0, 0, 0, 0.7);
         border: 0;
-        border-top: 1px solid #202020;
+        border-top: 1px solid #1b1b1b;
 
         &:first-child {
           border-top-left-radius: 0;
           border-top-right-radius: 0;
         }
 
+        &:last-child {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
+
         &:hover, &:focus {
-          background-color: #1f1f1f;
           color: #bfbfbf;
-          border-color: #3e3e3e;
+          background: rgba(20, 20, 20, 0.8);
         }
       }
     }

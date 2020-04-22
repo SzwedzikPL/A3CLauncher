@@ -5,7 +5,7 @@ import {appName} from '@/utils/electron';
 let config = {
   loginWindow: {
     sizeX: 320,
-    sizeY: 370
+    sizeY: 436
   },
   launcherWindow: {
     sizeX: 1064,

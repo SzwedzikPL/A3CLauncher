@@ -44,10 +44,15 @@
         </dropdown>
       </div>
       <div class="launcher-content">
-        <Intro v-if="firstRun" />
-        <keep-alive v-else>
-          <component :is="currentTabComponent" ref="currentComponent"></component>
-        </keep-alive>
+        <div class="launcher-content-wrapper">
+          <Intro v-if="firstRun" />
+          <keep-alive v-else>
+            <component :is="currentTabComponent" ref="currentComponent"></component>
+          </keep-alive>
+        </div>
+      </div>
+      <div class="launcher-footer" style="padding: 20px;">
+
       </div>
     </div>
   </div>
@@ -55,6 +60,7 @@
 
 <script>
 import appConfig from '@/config';
+import log from '@/utils/log';
 import windowMixin from '@/mixins/window';
 import tabsMixin from '@/mixins/tabs';
 import Dropdown from '@/components/Dropdown';
@@ -103,6 +109,7 @@ export default {
   },
   methods: {
     initWindow() {
+      log.debug('Initing', this.$options.name, 'window...');
       const currentWindow = this.$root.getCurrentWindow();
       // TODO: saving last size?
       currentWindow.setSize(sizeX, sizeY);
@@ -110,8 +117,10 @@ export default {
       currentWindow.center();
       currentWindow.show();
       this.$emit('ready');
+      log.debug(this.$options.name, 'window inited');
     },
     onWindowReady() {
+      log.debug(this.$options.name, 'window ready');
       this.checkOSTasks();
       this.$store.dispatch('app/validateSettings');
 

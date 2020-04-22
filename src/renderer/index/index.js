@@ -2,6 +2,7 @@ import '@/styles/index.scss';
 
 import Vue from 'vue';
 import App from '@/components/App';
+import log from '@/utils/log';
 import store from '@/store';
 import appConfig from '@/config';
 import stringtable from '@/stringtable';
@@ -62,6 +63,7 @@ new Vue({
       return remote.getCurrentWindow().getSize();
     },
     setWindowSize(x, y, center = false) {
+      log.debug('Setting window size', x, y, center);
       const currentWindow = remote.getCurrentWindow();
       const resizable = currentWindow.resizable;
       currentWindow.resizable = true;

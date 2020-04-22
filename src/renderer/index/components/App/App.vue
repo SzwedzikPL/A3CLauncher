@@ -1,23 +1,25 @@
 <template>
   <div id="app">
-    <Login v-if="!loggedIn" v-show="pageReady" :ready="pageReady" @ready="onPageReady" ref="login" />
-    <Launcher v-else v-show="pageReady" :ready="pageReady" @ready="onPageReady" ref="launcher" />
+    <Login v-if="!loggedIn" v-show="windowReady" :ready="windowReady" @ready="onWindowReady" ref="login" />
+    <Launcher v-else v-show="windowReady" :ready="windowReady" @ready="onWindowReady" ref="launcher" />
   </div>
 </template>
 
 <script>
+import log from '@/utils/log';
+
 import Login from '@/windows/Login';
 import Launcher from '@/windows/Launcher';
 
 export default {
   name: 'App',
   data: () => ({
-    pageReady: false
+    windowReady: false
   }),
   computed: {
     loggedIn() {
       // Hide page if loggedIn status changed
-      this.pageReady = false;
+      this.windowReady = false;
       return this.$store.state.session.loggedIn;
     }
   },
@@ -29,10 +31,11 @@ export default {
       if (!this.$refs.launcher) return;
       this.$refs.launcher.switchLocation(target);
     },
-    onPageReady() {
-      this.pageReady = true;
+    onWindowReady() {
+      this.windowReady = true;
     },
     hideWindow() {
+      log.debug('Hiding current window');
       // Hide window
       const currentWindow = this.$root.getCurrentWindow();
       currentWindow.hide();

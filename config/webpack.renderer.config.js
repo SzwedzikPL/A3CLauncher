@@ -139,7 +139,7 @@ const rendererConfig = {
       '@console': path.resolve(__dirname, '../src/renderer/console'),
       'vue$': 'vue/dist/vue.esm.js'
     },
-    extensions: ['.js', '.vue', '.json', '.css', '.node', '.vue']
+    extensions: ['.js', '.vue', '.json', '.css', '.node']
   },
   target: 'electron-renderer'
 }
